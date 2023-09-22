@@ -10,7 +10,7 @@ Particle::Particle(Vector3 Pos, Vector3 Vel) {
 }
 
 Particle::~Particle() {
-	delete renderItem;
+	renderItem->release();
 }
 
 void Particle::integrate(double t) {
