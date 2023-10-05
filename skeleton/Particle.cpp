@@ -1,12 +1,12 @@
 #include "Particle.h"
+#include <iostream>
 
-Particle::Particle(Vector3 Pos, Vector3 Vel) {
-	vel = Vel;
-	pose = physx::PxTransform(Pos);
-	Vector4 color = {255, 0, 0, 1};
-	physx::PxSphereGeometry sphere(10);
+Particle::Particle(float r, Vector4 color) : vel({0,0,0}), radius(r) {
+	pose = physx::PxTransform({0,0,0});
+	Vector4 c = color;
+	physx::PxSphereGeometry sphere(r);
 	physx::PxShape* shape = CreateShape(sphere);
-	renderItem = new RenderItem(shape, &pose, color);
+	renderItem = new RenderItem(shape, &pose, c);
 }
 
 Particle::~Particle() {
@@ -14,5 +14,8 @@ Particle::~Particle() {
 }
 
 void Particle::integrate(double t) {
-	pose.p = pose.p + vel * speed * t;
+	pose.p += vel * t;
 }
+
+void Particle::setVelocity(Vector3 v) { vel = v; }
+void Particle::setPosition(Vector3 p) { pose.p = p; }

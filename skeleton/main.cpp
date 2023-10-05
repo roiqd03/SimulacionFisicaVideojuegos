@@ -10,7 +10,7 @@
 
 #include <iostream>
 
-#include "Particle.h"
+#include "Gun.h"
 
 std::string display_text = "This is a test";
 
@@ -32,8 +32,7 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
-Particle* particle = nullptr;
-
+Gun* g = nullptr;
 
 
 // Initialize physics engine
@@ -60,8 +59,7 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-
-	particle = new Particle({0,0,0},{0,1,0});
+	g = new Gun();
 }
 
 
@@ -71,8 +69,8 @@ void initPhysics(bool interactive)
 void stepPhysics(bool interactive, double t)
 {
 	PX_UNUSED(interactive);
-	particle->integrate(t);
-
+	g->integrate(t);
+	g->eraseParticles();
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 }
@@ -83,7 +81,7 @@ void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
 
-	delete particle;
+	delete g;
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
 	gDispatcher->release();
@@ -108,6 +106,21 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//case ' ':	break;
 	case ' ':
 	{
+		break;
+	}
+	case 'G':
+	{
+		g->shoot(g->PISTOLA);
+		break;
+	}
+	case 'H':
+	{
+		g->shoot(g->CAÑON);
+		break;
+	}
+	case 'J':
+	{
+		g->shoot(g->TANQUE);
 		break;
 	}
 	default:
