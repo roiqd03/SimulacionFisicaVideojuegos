@@ -25,7 +25,7 @@ private:
 	std::list<Particle*>::iterator it;
 	Gun* gun = nullptr;
 
-	const int maxTime = 7;
+	const int maxTime = 10;
 	double time = 0;
 };
 
