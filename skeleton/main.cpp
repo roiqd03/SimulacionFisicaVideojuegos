@@ -33,6 +33,7 @@ PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
 Gun* g = nullptr;
+Particle* part = nullptr;
 
 
 // Initialize physics engine
@@ -60,6 +61,11 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 
 	g = new Gun();
+	part = new Particle(10, { 255,0,0,1 });
+	part->setVelocity({ 0,10,0 });
+	part->setPosition({ 0,0,0});
+	//part->setAcceleration({ 0,10,0 });
+	//part->setDamping(0.99f);
 }
 
 
@@ -70,6 +76,7 @@ void stepPhysics(bool interactive, double t)
 {
 	PX_UNUSED(interactive);
 	g->integrate(t);
+	part->integrate(t);
 	g->eraseParticles();
 	gScene->simulate(t);
 	gScene->fetchResults(true);
@@ -82,6 +89,7 @@ void cleanupPhysics(bool interactive)
 	PX_UNUSED(interactive);
 
 	delete g;
+	delete part;
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
 	gDispatcher->release();

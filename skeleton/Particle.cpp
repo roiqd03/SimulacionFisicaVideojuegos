@@ -1,7 +1,7 @@
 #include "Particle.h"
 #include <iostream>
 
-Particle::Particle(float r, Vector4 color) : vel({0,0,0}), radius(r), ac({ 0,0,0 }), damping(0), mass(0) {
+Particle::Particle(float r, Vector4 color) : vel({0,0,0}), radius(r), ac({ 0,0,0 }), damping(1), mass(0) {
 	pose = physx::PxTransform({0,0,0});
 	Vector4 c = color;
 	physx::PxSphereGeometry sphere(r);
