@@ -10,7 +10,13 @@ public:
 	virtual void integrate(double t);
 	void setVelocity(Vector3 v);
 	void setPosition(Vector3 p);
+	void setMass(float f);
+	void setAcceleration(Vector3 ac);
+	void setDamping(float d);
 protected:
+	Vector3 ac;
+	float mass;
+	float damping;
 	float radius;
 	Vector3 vel;
 	physx::PxTransform pose;
