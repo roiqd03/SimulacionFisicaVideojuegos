@@ -1,6 +1,6 @@
 #pragma once
 #include "RenderUtils.hpp"
-
+#include "ParticleGenerator.h"
 
 class Particle
 {

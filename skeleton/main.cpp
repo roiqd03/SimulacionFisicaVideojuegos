@@ -64,7 +64,7 @@ void initPhysics(bool interactive)
 	part = new Particle(10, { 255,0,0,1 });
 	part->setVelocity({ 0,10,0 });
 	part->setPosition({ 0,0,0});
-	//part->setAcceleration({ 0,10,0 });
+	part->setAcceleration({ 0,10,0 });
 	//part->setDamping(0.99f);
 }
 
