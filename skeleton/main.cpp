@@ -62,13 +62,13 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 
-	/*g = new Gun();
+	g = new Gun();
 	part = new Particle(10, { 255,0,0,1 });
 	part->setVelocity({ 0,10,0 });
 	part->setPosition({ 0,0,0});
-	part->setAcceleration({ 0,10,0 });*/
-	//part->setDamping(0.99f);
-	partSystem = new ParticleSystem({1,0,0},{0,50,0}, {5,10,5});
+	//part->setAcceleration({ 0,10,0 });
+	part->setDamping(0.99f);
+	//partSystem = new ParticleSystem({1,0,0},{0,50,0}, {5,10,5});
 }
 
 
@@ -78,10 +78,10 @@ void initPhysics(bool interactive)
 void stepPhysics(bool interactive, double t)
 {
 	PX_UNUSED(interactive);
-	/*g->integrate(t);
-	part->integrate(t);*/
-	partSystem->integrate(t);
-	//g->eraseParticles();
+	g->integrate(t);
+	part->integrate(t);
+	//partSystem->integrate(t);
+	g->eraseParticles();
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 }
@@ -92,10 +92,10 @@ void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
 
-	//delete g;
-	//delete part;
-	// 
-	delete partSystem;
+	delete g;
+	delete part;
+	 
+	//delete partSystem;
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
