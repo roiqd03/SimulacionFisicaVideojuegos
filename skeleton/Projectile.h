@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Particle.h"
-#include <list>
 
 class Gun;
 
@@ -17,8 +16,5 @@ public:
 private:
 	std::list<Particle*>::iterator it;
 	Gun* gun = nullptr;
-
-	const int maxTime = 10;
-	double time = 0;
 };
 

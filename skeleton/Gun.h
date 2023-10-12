@@ -15,4 +15,5 @@ public:
 private:
 	std::list<Particle*> v;
 	std::stack<Particle*> erased;
+	const int maxParticleLifeTime = 10;
 };

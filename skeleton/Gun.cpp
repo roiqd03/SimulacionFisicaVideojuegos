@@ -51,6 +51,7 @@ void Gun::shoot(TypeOfShot t) {
 void Gun::integrate(float t) {
 	for (auto particle : v) {
 		particle->integrate(t);
+		if (particle->getTime() > maxParticleLifeTime) pushErasedParticles(particle);
 	}
 }
 

@@ -11,7 +11,6 @@ void Projectile::integrate(double t) {
 	Particle::integrate(t);
 	
 	time += t;
-	if (time > maxTime) erase();
 }
 
 void Projectile::setContext(std::list<Particle*>::iterator it2) { it = it2; }

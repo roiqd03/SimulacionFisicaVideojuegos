@@ -1,4 +1,5 @@
 #include "ParticleSystem.h"
+#include <iostream>
 
 ParticleSystem::ParticleSystem(Vector3 pos, Vector3 mean_vel, Vector3 dev_vel) : 
 	generator(std::default_random_engine(std::chrono::system_clock::now().time_since_epoch().count())), pos(pos) {
@@ -10,6 +11,8 @@ ParticleSystem::ParticleSystem(Vector3 pos, Vector3 mean_vel, Vector3 dev_vel) :
 void ParticleSystem::integrate(float t) {
 	for (auto particle : _particles) {
 		particle->integrate(t);
+		if (particle->getTime() > maxParticleLifeTime) 
+			pushErasedParticles(particle);
 	}
 
 	Vector4 color = { (float)(rand() % 256), (float)(rand() % 256), (float)(rand() % 256),1 };
@@ -19,7 +22,10 @@ void ParticleSystem::integrate(float t) {
 	(*part)->setVelocity({ (*velNormalX)(generator), (*velNormalY)(generator), (*velNormalZ)(generator) });
 	(*part)->setAcceleration({ 0,-10.0f,0 });
 	(*part)->setDamping(1);
+	(*part)->setContext(_particles.begin());
 
+
+	eraseParticles();
 }
 
 ParticleSystem::~ParticleSystem() {
@@ -33,6 +39,12 @@ ParticleSystem::~ParticleSystem() {
 
 
 void ParticleSystem::eraseParticles() {
+	while (!_erased.empty()) {
+		auto e = _erased.top();
+		_particles.erase(e->getContext());
+		delete e;
+		_erased.pop();
+	}
 }
 
 void ParticleSystem::pushErasedParticles(Particle* p) {
