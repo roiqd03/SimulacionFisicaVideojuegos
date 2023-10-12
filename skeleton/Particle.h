@@ -10,6 +10,8 @@ public:
 	virtual void integrate(double t);
 	void setVelocity(Vector3 v);
 	void setPosition(Vector3 p);
+	inline Vector3 getPosition() { return pose.p; }
+	inline Vector3 getVelocity() { return vel; }
 	void setMass(float f);
 	void setAcceleration(Vector3 ac);
 	void setDamping(float d);
