@@ -15,7 +15,7 @@ void ParticleSystem::integrate(float t) {
 			pushErasedParticles(particle);
 	}
 
-	Vector4 color = { (float)(rand() % 256), (float)(rand() % 256), (float)(rand() % 256),1 };
+	Vector4 color = { 0, 0, (float)(rand() % 256 / 255.0f),1 };
 	_particles.push_front(new Particle(0.5, color));
 	auto part = _particles.begin();
 	(*part)->setPosition(pos);

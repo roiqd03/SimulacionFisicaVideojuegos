@@ -25,6 +25,6 @@ private:
 	std::normal_distribution<float>* velNormalZ;
 	std::default_random_engine generator;
 	Vector3 pos;
-	const int maxParticleLifeTime = 2;
+	const int maxParticleLifeTime = 10;
 };
 
