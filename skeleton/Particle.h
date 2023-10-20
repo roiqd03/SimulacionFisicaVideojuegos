@@ -16,6 +16,7 @@ public:
 	inline float getTime() { return time; }
 	void setMass(float f);
 	void setAcceleration(Vector3 ac);
+	void setGravity(Vector3 g);
 	void setDamping(float d);
 	void setContext(std::list<Particle*>::iterator);
 	std::list<Particle*>::iterator getContext();
@@ -26,6 +27,7 @@ protected:
 	float damping;
 	float radius;
 	float time;
+	Vector3 gravity;
 	Vector3 vel;
 	physx::PxTransform pose;
 	RenderItem* renderItem;

@@ -68,7 +68,9 @@ void initPhysics(bool interactive)
 	part->setPosition({ 0,0,0});*/
 	//part->setAcceleration({ 0,10,0 });
 	//part->setDamping(0.99f);
-	partSystem = new ParticleSystem({1,0,0},{0,50,0}, {5,10,5});
+	BoundingBox* box = new BoundingBox({50,100,50});
+	partSystem = new ParticleSystem({1,0,0},{0,50,0}, {5,10,5}, box);
+	box->translate({ 1,50,0 });
 }
 
 
