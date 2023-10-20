@@ -1,6 +1,5 @@
 #pragma once
 #include "Particle.h"
-#include "ParticleGenerator.h"
 #include <list>
 #include <stack>
 #include <random>
@@ -21,6 +20,8 @@ private:
 	std::list<Particle*> _particles;
 	std::list<ParticleGenerator*> _particles_generators;
 	std::stack<Particle*> _erased;
+	int _num_particles;
+
 	std::normal_distribution<float>* velNormalX;
 	std::normal_distribution<float>* velNormalY;
 	std::normal_distribution<float>* velNormalZ;

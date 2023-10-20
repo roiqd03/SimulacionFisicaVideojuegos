@@ -255,6 +255,7 @@
   <ItemGroup>
     <ClCompile Include="BoundingBox.cpp" />
     <ClCompile Include="callbacks.cpp" />
+    <ClCompile Include="GaussianParticleGenerator.cpp" />
     <ClCompile Include="Gun.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Particle.cpp" />
@@ -269,6 +270,7 @@
     <ClInclude Include="BoundingBox.h" />
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="core.hpp" />
+    <ClInclude Include="GaussianParticleGenerator.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleGenerator.h" />

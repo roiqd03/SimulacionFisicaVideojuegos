@@ -11,21 +11,27 @@ public:
 	virtual void integrate(double t);
 	void setVelocity(Vector3 v);
 	void setPosition(Vector3 p);
-	inline Vector3 getPosition() { return pose.p; }
-	inline Vector3 getVelocity() { return vel; }
-	inline float getTime() { return time; }
 	void setMass(float f);
 	void setAcceleration(Vector3 ac);
 	void setGravity(Vector3 g);
 	void setDamping(float d);
+	inline Vector3 getVelocity() { return vel; }
+	inline Vector3 getPosition() { return pose.p; }
+	inline float setMass() { return mass; }
+	inline Vector3 setAcceleration() { return ac; }
+	inline Vector3 setGravity() { return gravity; }
+	inline float setDamping() { return damping; }
+	inline float getTime() { return time; }
 	void setContext(std::list<Particle*>::iterator);
 	std::list<Particle*>::iterator getContext();
+	virtual Particle* clone() const;
 protected:
 	std::list<Particle*>::iterator it;
 	Vector3 ac;
 	float mass;
 	float damping;
 	float radius;
+	Vector4 color;
 	float time;
 	Vector3 gravity;
 	Vector3 vel;
