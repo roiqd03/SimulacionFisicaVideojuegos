@@ -17,11 +17,16 @@ protected:
 	int num_models;
 	std::default_random_engine generator;
 	int num_particles;
+	bool generateLoop;
+	float time, loop_time;
 public:
 	ParticleGenerator(Vector3 mean_pos, Vector3 mean_vel, float erase_time, int num_particles);
 	virtual ~ParticleGenerator() { for (auto part : _particle_models) delete part; }
 	void setParticle(Particle* _model, std::string _type);
 	void addModelParticle(Particle* _model, std::string _type);
+	void addGenerationLoop(float loop_time);
+	inline bool hasLoop() { return generateLoop; }
+	bool isLoopCompleted(float t);
 	virtual std::list<Particle*> generateParticles() = 0;
 };
 

@@ -15,6 +15,7 @@ ParticleSystem::ParticleSystem(BoundingBox* boundingBox) :
 	p1->setGravity({ 0, -10, 0 });
 	p1->setDamping(0.99f);
 	g->addModelParticle(p1, "AGUA2");
+	g->addGenerationLoop(0.1);
 }
 
 void ParticleSystem::addParticle(Particle* p) {
@@ -32,9 +33,11 @@ void ParticleSystem::integrate(float t) {
 
 	
 	for (auto gens : _particles_generators) {
-		auto particles = gens->generateParticles();
-		for (auto p : particles) {
-			addParticle(p);
+		if (gens->hasLoop() && gens->isLoopCompleted(t)) {
+			auto particles = gens->generateParticles();
+			for (auto p : particles) {
+				addParticle(p);
+			}
 		}
 	}
 
