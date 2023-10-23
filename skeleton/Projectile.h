@@ -7,7 +7,7 @@ class Gun;
 class Projectile : public Particle
 {
 public:
-	Projectile(float radius, Vector4 color, Gun* gun = nullptr);
+	Projectile(float radius, Vector4 color, float life_time, Gun* gun = nullptr);
 	virtual ~Projectile() = default;
 	virtual void integrate(double t);
 	void setContext(std::list<Particle*>::iterator);

@@ -5,7 +5,7 @@
 #include "Gun.h"
 #include <iostream>
 
-Projectile::Projectile(float radius, Vector4 color, Gun* gun) : Particle(radius, color), gun(gun) {}
+Projectile::Projectile(float radius, Vector4 color, float life_time, Gun* gun) : Particle(radius, color, life_time), gun(gun) {}
 
 void Projectile::integrate(double t) {
 	Particle::integrate(t);

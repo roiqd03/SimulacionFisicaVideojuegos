@@ -6,7 +6,7 @@
 class Particle
 {
 public:
-	Particle(float r, Vector4 color);
+	Particle(float r, Vector4 color, float life_time);
 	virtual ~Particle();
 	virtual void integrate(double t);
 	void setVelocity(Vector3 v);
@@ -22,6 +22,8 @@ public:
 	inline Vector3 setGravity() { return gravity; }
 	inline float setDamping() { return damping; }
 	inline float getTime() { return time; }
+	inline float getLifeTime() { return life_time; }
+	inline void setLifeTime(float life_time) { this->life_time = life_time; }
 	void setContext(std::list<Particle*>::iterator);
 	std::list<Particle*>::iterator getContext();
 	virtual Particle* clone() const;
@@ -33,6 +35,7 @@ protected:
 	float radius;
 	Vector4 color;
 	float time;
+	float life_time;
 	Vector3 gravity;
 	Vector3 vel;
 	physx::PxTransform pose;

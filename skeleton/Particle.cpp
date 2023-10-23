@@ -1,8 +1,8 @@
 #include "Particle.h"
 #include <iostream>
 
-Particle::Particle(float r, Vector4 color) : vel({0,0,0}), radius(r), ac({ 0,0,0 }),
-	gravity({ 0,0,0 }), damping(1), mass(0), time(0), color(color) {
+Particle::Particle(float r, Vector4 color, float life_time) : vel({0,0,0}), radius(r), ac({ 0,0,0 }),
+	gravity({ 0,0,0 }), damping(1), mass(0), time(0), color(color), life_time(life_time) {
 	
 	pose = physx::PxTransform({0,0,0});
 	Vector4 c = color;
@@ -30,7 +30,7 @@ void Particle::setAcceleration(Vector3 ac) { this->ac = ac; }
 void Particle::setDamping(float d) { damping = d; }
 void Particle::setGravity(Vector3 g) { gravity = g; }
 Particle* Particle::clone() const {
-	Particle* _particle = new Particle(radius, renderItem->color);
+	Particle* _particle = new Particle(radius, renderItem->color, life_time);
 
 	_particle->pose.p = pose.p;
 	_particle->vel = vel;
