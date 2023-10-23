@@ -23,7 +23,9 @@ public:
 	inline float setDamping() { return damping; }
 	inline float getTime() { return time; }
 	inline float getLifeTime() { return life_time; }
+	inline Vector4 getColor() { return color; }
 	inline void setLifeTime(float life_time) { this->life_time = life_time; }
+	void setInvisible();
 	void setContext(std::list<Particle*>::iterator);
 	std::list<Particle*>::iterator getContext();
 	virtual Particle* clone() const;

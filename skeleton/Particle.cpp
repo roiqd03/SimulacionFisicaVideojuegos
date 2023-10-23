@@ -12,7 +12,7 @@ Particle::Particle(float r, Vector4 color, float life_time) : vel({0,0,0}), radi
 }
 
 Particle::~Particle() {
-	renderItem->release();
+	if(renderItem != nullptr) renderItem->release();
 }
 
 void Particle::integrate(double t) {
@@ -30,7 +30,7 @@ void Particle::setAcceleration(Vector3 ac) { this->ac = ac; }
 void Particle::setDamping(float d) { damping = d; }
 void Particle::setGravity(Vector3 g) { gravity = g; }
 Particle* Particle::clone() const {
-	Particle* _particle = new Particle(radius, renderItem->color, life_time);
+	Particle* _particle = new Particle(radius, color, life_time);
 
 	_particle->pose.p = pose.p;
 	_particle->vel = vel;
@@ -45,3 +45,8 @@ Particle* Particle::clone() const {
 
 void Particle::setContext(std::list<Particle*>::iterator it2) { it = it2; }
 std::list<Particle*>::iterator  Particle::getContext() { return it; }
+
+void Particle::setInvisible() {
+	renderItem->release();
+	renderItem = nullptr;
+}

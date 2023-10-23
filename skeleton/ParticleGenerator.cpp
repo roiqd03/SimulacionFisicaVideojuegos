@@ -12,6 +12,7 @@ void ParticleGenerator::setParticle(Particle* _model, std::string _type) {
 
 void ParticleGenerator::addModelParticle(Particle* _model, std::string _type) {
 	_particle_models.push_back(_model);
+	_model->setInvisible();
 	Particle_Type[_type] = num_models;
 	num_models++;
 }
