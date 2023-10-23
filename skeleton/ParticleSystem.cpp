@@ -6,7 +6,6 @@
 ParticleSystem::ParticleSystem(BoundingBox* boundingBox) :
 	box(boundingBox) {
 	GaussianParticleGenerator* g = new GaussianParticleGenerator({ 1,0,0 }, { 0,50,0 }, 5, 1, { 0.2,0.2,0.2 }, { 5,10,5 }, 1);
-	_particles_generators.push_back(g);
 	Particle* p = new Particle(1, { 0,0,1,1 }, 0);
 	p->setGravity({ 0, -10, 0 });
 	p->setDamping(0.99f);
@@ -15,12 +14,25 @@ ParticleSystem::ParticleSystem(BoundingBox* boundingBox) :
 	p1->setGravity({ 0, -10, 0 });
 	p1->setDamping(0.99f);
 	g->addModelParticle(p1, "AGUA2");
-	g->addGenerationLoop(0.1);
+	addGenerator(g, "Fuente");
+	//g->addGenerationLoop(0.1);
+	getParticleGenerator("Fuente")->addGenerationLoop(0.1);
 }
 
 void ParticleSystem::addParticle(Particle* p) {
 	_particles.push_front(p);
 	p->setContext(_particles.begin());
+}
+
+void ParticleSystem::addGenerator(ParticleGenerator* g, std::string name) {
+	_particles_generators.push_front(g);
+	id_generators[name] = g;
+}
+
+ParticleGenerator* ParticleSystem::getParticleGenerator(std::string name) {
+	auto it = id_generators.find(name);
+	if (it == id_generators.end()) throw std::invalid_argument("generator does not exist");
+	else return (*it).second;
 }
 
 
