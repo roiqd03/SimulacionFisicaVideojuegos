@@ -28,5 +28,6 @@ public:
 	inline bool hasLoop() { return generateLoop; }
 	bool isLoopCompleted(float t);
 	virtual std::list<Particle*> generateParticles() = 0;
+	inline void changePosition(Vector3 pos) { mean_pos = pos; }
 };
 

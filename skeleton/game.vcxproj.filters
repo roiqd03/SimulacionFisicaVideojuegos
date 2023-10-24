@@ -18,6 +18,8 @@
     <ClCompile Include="BoundingBox.cpp" />
     <ClCompile Include="GaussianParticleGenerator.cpp" />
     <ClCompile Include="UniformParticleGenerator.cpp" />
+    <ClCompile Include="Firework.cpp" />
+    <ClCompile Include="FireworkGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -37,6 +39,8 @@
     <ClInclude Include="BoundingBox.h" />
     <ClInclude Include="GaussianParticleGenerator.h" />
     <ClInclude Include="UniformParticleGenerator.h" />
+    <ClInclude Include="Firework.h" />
+    <ClInclude Include="FireworkGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

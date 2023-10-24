@@ -9,9 +9,9 @@ UniformParticleGenerator::UniformParticleGenerator(Vector3 mean_pos, Vector3 mea
 	Vector3 vW = vel_width / 2;
 	Vector3 pW = pos_width / 2;
 	float tW = time_width / 2;
-	posX = new std::uniform_real_distribution<float>(mean_pos.x - pW.x, mean_pos.x + pW.x);
-	posY = new std::uniform_real_distribution<float>(mean_pos.y - pW.y, mean_pos.y + pW.y);
-	posZ = new std::uniform_real_distribution<float>(mean_pos.z - pW.z, mean_pos.z + pW.z);
+	posX = new std::uniform_real_distribution<float>(-pW.x, pW.x);
+	posY = new std::uniform_real_distribution<float>(-pW.y, pW.y);
+	posZ = new std::uniform_real_distribution<float>(-pW.z, pW.z);
 
 	velX = new std::uniform_real_distribution<float>(mean_vel.x - vW.x, mean_vel.x + vW.x);
 	velY = new std::uniform_real_distribution<float>(mean_vel.y - vW.y, mean_vel.y + vW.y);
@@ -34,7 +34,7 @@ std::list<Particle*> UniformParticleGenerator::generateParticles() {
 	std::list<Particle*> particles;
 	for (int i = 0; i < num_particles; ++i) {
 		Particle* p = _particle_models[(rand() % _particle_models.size())]->clone();
-		p->setPosition({ (*posX)(generator), (*posY)(generator), (*posZ)(generator) });
+		p->setPosition(mean_pos + Vector3((*posX)(generator), (*posY)(generator), (*posZ)(generator)));
 		p->setVelocity({ (*velX)(generator), (*velY)(generator), (*velZ)(generator) });
 		p->setLifeTime((*time)(generator));
 		particles.push_back(p);

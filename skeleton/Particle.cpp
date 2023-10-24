@@ -1,8 +1,7 @@
 #include "Particle.h"
-#include <iostream>
 
 Particle::Particle(float r, Vector4 color, float life_time) : vel({0,0,0}), radius(r), ac({ 0,0,0 }),
-	gravity({ 0,0,0 }), damping(1), mass(0), time(0), color(color), life_time(life_time) {
+	gravity({ 0,0,0 }), damping(1), mass(0), time(0), color(color), life_time(life_time), generator(nullptr) {
 	
 	pose = physx::PxTransform({0,0,0});
 	Vector4 c = color;
@@ -12,6 +11,7 @@ Particle::Particle(float r, Vector4 color, float life_time) : vel({0,0,0}), radi
 }
 
 Particle::~Particle() {
+	if(generator != nullptr) delete generator;
 	if(renderItem != nullptr) renderItem->release();
 }
 
@@ -49,4 +49,9 @@ std::list<Particle*>::iterator  Particle::getContext() { return it; }
 void Particle::setInvisible() {
 	renderItem->release();
 	renderItem = nullptr;
+}
+
+void Particle::addGenerator(ParticleGenerator* g) {
+	if (generator != nullptr) delete generator;
+	generator = g;
 }

@@ -3,22 +3,47 @@
 
 #include "GaussianParticleGenerator.h"
 #include "UniformParticleGenerator.h"
+#include "Firework.h"
 
 ParticleSystem::ParticleSystem(BoundingBox* boundingBox) :
 	box(boundingBox) {
-	GaussianParticleGenerator* g = new GaussianParticleGenerator({ 1,0,0 }, { 0,50,0 }, 5, 1, { 0.2,0.2,0.2 }, { 5,10,5 }, 1);
+	GaussianParticleGenerator* g = new GaussianParticleGenerator({ -10,0,0 }, { 0,40,0 }, 2, 1, { 0.2,0.2,0.2 }, { 5,5,5 }, 0.2);
 	//UniformParticleGenerator* g = new UniformParticleGenerator({ 1,0,0 }, { 0,50,0 }, 5, 1, { 0.4,0.4,0.4 }, { 10,20,10 }, 2);
-	Particle* p = new Particle(1, { 0,0,1,1 }, 0);
+	Firework* p = new Firework(1, { 0,0,1,1 }, 0, 3, 7, 10);
 	p->setGravity({ 0, -10, 0 });
 	p->setDamping(0.99f);
 	g->addModelParticle(p, "AGUA1");
-	Particle* p1 = new Particle(1, { 0,0,0.5,1 }, 0);
-	p1->setGravity({ 0, -10, 0 });
-	p1->setDamping(0.99f);
-	g->addModelParticle(p1, "AGUA2");
+	p = new Firework(1, { 1,0,0,1 }, 0, 3, 7, 10);
+	p->setGravity({ 0, -10, 0 });
+	p->setDamping(0.99f);
+	g->addModelParticle(p, "AGUA2");
+	p = new Firework(1, { 0,1,0,1 }, 0, 3, 7, 10);
+	p->setGravity({ 0, -10, 0 });
+	p->setDamping(0.99f);
+	g->addModelParticle(p, "AGUA3");
+	p = new Firework(1, { 1,1,0,1 }, 0, 3, 7, 10);
+	p->setGravity({ 0, -10, 0 });
+	p->setDamping(0.99f);
+	g->addModelParticle(p, "AGUA4");
+	p = new Firework(1, { 0,1,1,1 }, 0, 3, 7, 10);
+	p->setGravity({ 0, -10, 0 });
+	p->setDamping(0.99f);
+	g->addModelParticle(p, "AGUA5");
+	p = new Firework(1, { 1,0,1,1 }, 0, 3, 7, 10);
+	p->setGravity({ 0, -10, 0 });
+	p->setDamping(0.99f);
+	g->addModelParticle(p, "AGUA6");
+	p = new Firework(1, { 1,1,1,1 }, 0, 3, 7, 10);
+	p->setGravity({ 0, -10, 0 });
+	p->setDamping(0.99f);
+	g->addModelParticle(p, "AGUA7");
+	p = new Firework(1, { 0,0,0,1 }, 0, 3, 7, 10);
+	p->setGravity({ 0, -10, 0 });
+	p->setDamping(0.99f);
+	g->addModelParticle(p, "AGUA8");
 	addGenerator(g, "Fuente");
 	//g->addGenerationLoop(0.1);
-	getParticleGenerator("Fuente")->addGenerationLoop(0.1);
+	getParticleGenerator("Fuente")->addGenerationLoop(2);
 }
 
 void ParticleSystem::addParticle(Particle* p) {
@@ -72,6 +97,13 @@ ParticleSystem::~ParticleSystem() {
 void ParticleSystem::eraseParticles() {
 	while (!_erased.empty()) {
 		auto e = _erased.top();
+		e->onDeath();
+		if (e->generatesOnDeath()) {
+			auto l = e->generateParticles();
+			for (auto p : l) {
+				addParticle(p);
+			}
+		}
 		_particles.erase(e->getContext());
 		delete e;
 		_erased.pop();

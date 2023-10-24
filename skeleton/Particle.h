@@ -29,6 +29,10 @@ public:
 	void setContext(std::list<Particle*>::iterator);
 	std::list<Particle*>::iterator getContext();
 	virtual Particle* clone() const;
+	inline bool generatesOnDeath() { return generator != nullptr; }
+	inline std::list<Particle*> generateParticles() { generator->changePosition(pose.p);  return generator->generateParticles(); }
+	void addGenerator(ParticleGenerator* g);
+	virtual void onDeath(){};
 protected:
 	std::list<Particle*>::iterator it;
 	Vector3 ac;
@@ -42,5 +46,6 @@ protected:
 	Vector3 vel;
 	physx::PxTransform pose;
 	RenderItem* renderItem;
+	ParticleGenerator* generator;
 };
 
