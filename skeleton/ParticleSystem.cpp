@@ -2,10 +2,12 @@
 #include <iostream>
 
 #include "GaussianParticleGenerator.h"
+#include "UniformParticleGenerator.h"
 
 ParticleSystem::ParticleSystem(BoundingBox* boundingBox) :
 	box(boundingBox) {
-	GaussianParticleGenerator* g = new GaussianParticleGenerator({ 1,0,0 }, { 0,50,0 }, 5, 1, { 0.2,0.2,0.2 }, { 5,10,5 }, 1);
+	//GaussianParticleGenerator* g = new GaussianParticleGenerator({ 1,0,0 }, { 0,50,0 }, 5, 1, { 0.2,0.2,0.2 }, { 5,10,5 }, 1);
+	UniformParticleGenerator* g = new UniformParticleGenerator({ 1,0,0 }, { 0,50,0 }, 5, 1, { 0.4,0.4,0.4 }, { 10,20,10 }, 2);
 	Particle* p = new Particle(1, { 0,0,1,1 }, 0);
 	p->setGravity({ 0, -10, 0 });
 	p->setDamping(0.99f);

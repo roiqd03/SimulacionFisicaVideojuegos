@@ -1,6 +1,5 @@
 #pragma once
 #include "ParticleGenerator.h"
-#include "BoundingBox.h"
 
 class GaussianParticleGenerator : public ParticleGenerator
 {
