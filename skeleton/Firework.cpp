@@ -18,7 +18,7 @@ void Firework::onDeath() {
 		p->setGravity({ 0, -10, 0 });
 		p->setDamping(0.99f);
 		g->addModelParticle(p, "FIREWORK");
-		generator = g;
+		addGenerator(g);
 	}
 }
 

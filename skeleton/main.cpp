@@ -11,7 +11,7 @@
 #include <iostream>
 
 #include "Gun.h"
-#include "ParticleSystem.h"
+#include "FireworkSystem.h"
 
 std::string display_text = "This is a test";
 
@@ -35,7 +35,7 @@ ContactReportCallback gContactReportCallback;
 
 Gun* g = nullptr;
 Particle* part = nullptr;
-ParticleSystem* partSystem = nullptr;
+FireworkSystem* partSystem = nullptr;
 
 
 // Initialize physics engine
@@ -68,8 +68,8 @@ void initPhysics(bool interactive)
 	part->setPosition({ 0,0,0});*/
 	//part->setAcceleration({ 0,10,0 });
 	//part->setDamping(0.99f);
-	BoundingBox* box = new BoundingBox({5000,10000,5000});
-	partSystem = new ParticleSystem(box);
+	BoundingBox* box = new BoundingBox({500,1000,500});
+	partSystem = new FireworkSystem(box);
 	box->translate({ 1,50,0 });
 }
 
