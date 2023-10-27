@@ -256,7 +256,6 @@
     <ClCompile Include="BoundingBox.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="Firework.cpp" />
-    <ClCompile Include="FireworkGenerator.cpp" />
     <ClCompile Include="FireworkSystem.cpp" />
     <ClCompile Include="GaussianParticleGenerator.cpp" />
     <ClCompile Include="Gun.cpp" />
@@ -275,7 +274,6 @@
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="core.hpp" />
     <ClInclude Include="Firework.h" />
-    <ClInclude Include="FireworkGenerator.h" />
     <ClInclude Include="FireworkSystem.h" />
     <ClInclude Include="GaussianParticleGenerator.h" />
     <ClInclude Include="Gun.h" />
