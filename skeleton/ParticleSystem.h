@@ -9,7 +9,7 @@ class ParticleSystem
 {
 public:
 	ParticleSystem(BoundingBox* boundingBox);
-	~ParticleSystem();
+	virtual ~ParticleSystem();
 	void integrate(float t);
 	void addParticle(Particle* p);
 	void addGenerator(ParticleGenerator* g, std::string name);

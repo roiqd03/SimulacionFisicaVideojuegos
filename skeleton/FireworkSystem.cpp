@@ -32,7 +32,7 @@ FireworkSystem::FireworkSystem(BoundingBox* bb) : ParticleSystem(bb) {
 	p->setDamping(0.99f);
 	g->addModelParticle(p, "FIREWORK_CYAN");
 
-	p = new Firework(0.5, { 1,0,1,1 }, 0, 3, 15, 30);
+	p = new Firework(0.5, { 1,0,1,1 }, 0, 3, 15, 20);
 	p->setGravity({ 0, -10, 0 });
 	p->setDamping(0.99f);
 	g->addModelParticle(p, "FIREWORK_PURPLE");
