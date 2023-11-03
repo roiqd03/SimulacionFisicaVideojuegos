@@ -12,6 +12,8 @@
 
 #include "Gun.h"
 #include "FireworkSystem.h"
+#include "ParticleForceRegistry.h"
+#include "GravityForceGenerator.h"
 
 std::string display_text = "This is a test";
 
@@ -68,9 +70,19 @@ void initPhysics(bool interactive)
 	part->setPosition({ 0,0,0});*/
 	//part->setAcceleration({ 0,10,0 });
 	//part->setDamping(0.99f);
-	BoundingBox* box = new BoundingBox({500,1000,500});
+	
+	
+	/*BoundingBox* box = new BoundingBox({500,1000,500});
 	partSystem = new FireworkSystem(box);
-	box->translate({ 1,50,0 });
+	box->translate({ 1,50,0 });*/
+	GravityForceGenerator* g = new GravityForceGenerator({ 0,9.8f,0 });
+	GravityForceGenerator* g1 = new GravityForceGenerator({ 0,4.5f,0 });
+	Particle* p = new Particle(0.5, { 1,0,0,1 }, 10000);
+	Particle* p1 = new Particle(0.5, { 0,0,1,1 }, 10000);
+	ParticleForceRegistry* pFG = new ParticleForceRegistry();
+	pFG->addRegistry(g, p);
+	pFG->addRegistry(g1, p1);
+
 }
 
 
@@ -83,6 +95,8 @@ void stepPhysics(bool interactive, double t)
 	/*g->integrate(t);
 	part->integrate(t);*/
 	partSystem->integrate(t);
+	
+
 	//g->eraseParticles();
 	gScene->simulate(t);
 	gScene->fetchResults(true);
