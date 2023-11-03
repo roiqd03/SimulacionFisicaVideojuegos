@@ -25,7 +25,7 @@ void Particle::integrate(double t) {
 void Particle::setVelocity(Vector3 v) { vel = v; }
 void Particle::setPosition(Vector3 p) { pose.p = p; }
 
-void Particle::setMass(float f) { mass = f; }
+void Particle::setMass(float f) { mass = f; inv_mass = 1 / f; }
 void Particle::setAcceleration(Vector3 ac) { this->ac = ac; }
 void Particle::setDamping(float d) { damping = d; }
 void Particle::setGravity(Vector3 g) { gravity = g; }

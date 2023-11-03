@@ -12,12 +12,13 @@ public:
 	void setVelocity(Vector3 v);
 	void setPosition(Vector3 p);
 	void setMass(float f);
+	inline void setInvMass(float _inv_mass) { inv_mass = _inv_mass; mass = 1 / _inv_mass; }
 	void setAcceleration(Vector3 ac);
 	void setGravity(Vector3 g);
 	void setDamping(float d);
 	inline Vector3 getVelocity() { return vel; }
 	inline Vector3 getPosition() { return pose.p; }
-	inline float setMass() { return mass; }
+	inline float getMass() { return mass; }
 	inline Vector3 setAcceleration() { return ac; }
 	inline Vector3 setGravity() { return gravity; }
 	inline float setDamping() { return damping; }
@@ -33,10 +34,15 @@ public:
 	inline std::list<Particle*> generateParticles() { generator->changePosition(pose.p);  return generator->generateParticles(); }
 	void addGenerator(ParticleGenerator* g);
 	virtual void onDeath(){};
+
+	Vector3 force;
+	void clearForce();
+	void addForce(const Vector3& f);
 protected:
 	std::list<Particle*>::iterator it;
 	Vector3 ac;
 	float mass;
+	float inv_mass;
 	float damping;
 	float radius;
 	Vector4 color;
