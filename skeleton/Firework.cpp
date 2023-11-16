@@ -1,8 +1,9 @@
 #include "Firework.h"
+#include "GravityForceGenerator.h"
 
 const Vector3 Firework::mean_vel = { 0,4,0 };
 const Vector3 Firework::std_dev_vel = { 4, 3, 4 };
-const float Firework::erased_time = 1.5;
+const float Firework::erased_time = 2;
 const float Firework::std_dev_time = 0.5;
 
 
@@ -18,6 +19,11 @@ void Firework::onDeath() {
 		//p->setGravity({ 0, -10, 0 });
 		p->setDamping(0.99f);
 		g->addModelParticle(p, "FIREWORK");
+		p->setInvMass(1);
+		p->setFirstGenerator(firstGenerator);
+		for (auto forces : (*firstGenerator->getForceGenerators())) {
+			g->addForceGenerator(forces);
+		}
 		addGenerator(g);
 	}
 }
@@ -31,6 +37,7 @@ Particle* Firework::clone() const {
 	//_particle->gravity = gravity;
 	_particle->inv_mass = inv_mass;
 	_particle->damping = damping;
+	_particle->firstGenerator = firstGenerator;
 
 	return _particle;
 }

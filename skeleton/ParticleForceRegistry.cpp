@@ -1,10 +1,15 @@
 #include "ParticleForceRegistry.h"
 
-
-void ParticleForceRegistry::updateForces(double duration) {
-	for (auto it = begin(); it != end(); it++) {
-		it->second->updateForce(it->first, duration);
+std::unordered_set<ForceGenerator*> ParticleForceRegistry::updateForces(double duration) {
+	std::unordered_set<ForceGenerator*> s;
+	for (auto it = begin(); it != end();) {
+		if (!(it->second->updateForce(it->first, duration))) {
+			s.insert(it->second);
+			it = erase(it);
+		}
+		else ++it;
 	}
+	return s;
 }
 
 void ParticleForceRegistry::addRegistry(ForceGenerator* fg, Particle* p) {
@@ -12,9 +17,5 @@ void ParticleForceRegistry::addRegistry(ForceGenerator* fg, Particle* p) {
 }
 
 void ParticleForceRegistry::deleteParticleRegistry(Particle* p) {
-	auto it = find(p);
-	while (it != end()) {
-		erase(it);
-		it = find(p);
-	}
+	this->erase(p);
 }

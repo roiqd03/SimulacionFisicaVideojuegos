@@ -37,6 +37,7 @@ std::list<Particle*> UniformParticleGenerator::generateParticles() {
 		p->setPosition(mean_pos + Vector3((*posX)(generator), (*posY)(generator), (*posZ)(generator)));
 		p->setVelocity({ (*velX)(generator), (*velY)(generator), (*velZ)(generator) });
 		p->setLifeTime((*time)(generator));
+		
 		particles.push_back(p);
 	}
 	return particles;

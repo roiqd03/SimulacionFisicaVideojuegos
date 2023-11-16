@@ -40,6 +40,7 @@ Particle* Particle::clone() const {
 	//_particle->gravity = gravity;
 	_particle->inv_mass = inv_mass;
 	_particle->damping = damping;
+	_particle->firstGenerator = firstGenerator;
 
 	return _particle;
 }

@@ -11,7 +11,9 @@ public:
 	virtual void integrate(double t);
 	void setVelocity(Vector3 v);
 	void setPosition(Vector3 p);
-	inline void setInvMass(float _inv_mass) { inv_mass = _inv_mass; }
+	inline void setInvMass(float _inv_mass) { 
+		inv_mass = _inv_mass; 
+	}
 	void setAcceleration(Vector3 ac);
 	void setGravity(Vector3 g);
 	void setDamping(float d);
@@ -26,11 +28,12 @@ public:
 	inline Vector4 getColor() { return color; }
 	inline void setLifeTime(float life_time) { this->life_time = life_time; }
 	void setInvisible();
+	void setFirstGenerator(ParticleGenerator* myG) { firstGenerator = myG; };
 	void setContext(std::list<Particle*>::iterator);
 	std::list<Particle*>::iterator getContext();
 	virtual Particle* clone() const;
 	inline bool generatesOnDeath() { return generator != nullptr; }
-	inline std::list<Particle*> generateParticles() { generator->changePosition(pose.p);  return generator->generateParticles(); }
+	inline std::pair<std::list<Particle*>, ParticleGenerator*> generateParticles() { generator->changePosition(pose.p);  return { generator->generateParticles(), generator }; }
 	void addGenerator(ParticleGenerator* g);
 	virtual void onDeath(){};
 
@@ -51,6 +54,7 @@ protected:
 	Vector3 vel;
 	physx::PxTransform pose;
 	RenderItem* renderItem;
-	ParticleGenerator* generator;
+	ParticleGenerator* generator = nullptr;
+	ParticleGenerator* firstGenerator = nullptr;
 };
 

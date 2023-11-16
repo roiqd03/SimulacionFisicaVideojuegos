@@ -37,7 +37,7 @@ ContactReportCallback gContactReportCallback;
 
 Gun* g = nullptr;
 Particle* part = nullptr;
-FireworkSystem* partSystem = nullptr;
+ParticleSystem* partSystem = nullptr;
 
 
 // Initialize physics engine
@@ -72,17 +72,8 @@ void initPhysics(bool interactive)
 	//part->setDamping(0.99f);
 	
 	
-	/*BoundingBox* box = new BoundingBox({500,1000,500});
-	partSystem = new FireworkSystem(box);
-	box->translate({ 1,50,0 });*/
-	GravityForceGenerator* g = new GravityForceGenerator({ 0,9.8f,0 });
-	GravityForceGenerator* g1 = new GravityForceGenerator({ 0,4.5f,0 });
-	Particle* p = new Particle(0.5, { 1,0,0,1 }, 10000);
-	Particle* p1 = new Particle(0.5, { 0,0,1,1 }, 10000);
-	ParticleForceRegistry* pFG = new ParticleForceRegistry();
-	pFG->addRegistry(g, p);
-	pFG->addRegistry(g1, p1);
-
+	BoundingBox* box = new BoundingBox({500,1000,500});
+	partSystem = new FireworkSystem();
 }
 
 
@@ -154,6 +145,8 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		g->shoot(g->TANQUE);
 		break;
 	}
+	case 'U':
+		static_cast<FireworkSystem*>(partSystem)->explosion();
 	default:
 		break;
 	}

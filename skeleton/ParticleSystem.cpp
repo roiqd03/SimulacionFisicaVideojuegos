@@ -2,12 +2,17 @@
 
 ParticleSystem::ParticleSystem(BoundingBox* boundingBox) :
 	box(boundingBox) {
-	
+	pFR = new ParticleForceRegistry();
 }
 
-void ParticleSystem::addParticle(Particle* p) {
+void ParticleSystem::addParticle(Particle* p, ParticleGenerator* pG) {
 	_particles.push_front(p);
 	p->setContext(_particles.begin());
+	if (pG != nullptr) {
+		for (auto forces : (*pG->getForceGenerators())) {
+			addRegistry(forces, p);
+		}
+	}
 }
 
 void ParticleSystem::addGenerator(ParticleGenerator* g, std::string name) {
@@ -21,11 +26,28 @@ ParticleGenerator* ParticleSystem::getParticleGenerator(std::string name) {
 	else return (*it).second;
 }
 
+void ParticleSystem::addRegistry(ForceGenerator* g, Particle* p) {
+	pFR->addRegistry(g, p);
+	_force_generators.insert(g);
+}
+
+void ParticleSystem::addForceToPartGenerator(ParticleGenerator* p, ForceGenerator* f) {
+	p->addForceGenerator(f);
+}
 
 void ParticleSystem::integrate(float t) {
+	for (auto forceGenerator : _force_generators) {
+		forceGenerator->updateTime(t);
+	}
+	auto s = pFR->updateForces(t);
+	for (auto forceGenerator : s) {
+		_force_generators.erase(forceGenerator);
+		delete forceGenerator;
+	}
+
 	for (auto particle : _particles) {
 		particle->integrate(t);
-		if (particle->getTime() > particle->getLifeTime() || !box->contains(particle->getPosition()))
+		if (particle->getTime() > particle->getLifeTime() || (box != nullptr && !box->contains(particle->getPosition())))
 			pushErasedParticles(particle);
 	}
 
@@ -34,7 +56,7 @@ void ParticleSystem::integrate(float t) {
 		if (gens->hasLoop() && gens->isLoopCompleted(t)) {
 			auto particles = gens->generateParticles();
 			for (auto p : particles) {
-				addParticle(p);
+				addParticle(p, gens);
 			}
 		}
 	}
@@ -50,6 +72,11 @@ ParticleSystem::~ParticleSystem() {
 	for (auto gens : _particles_generators) {
 		delete gens;
 	}
+
+	for (auto gens : _force_generators) {
+		delete gens;
+	}
+	delete pFR;
 }
 
 
@@ -59,11 +86,12 @@ void ParticleSystem::eraseParticles() {
 		e->onDeath();
 		if (e->generatesOnDeath()) {
 			auto l = e->generateParticles();
-			for (auto p : l) {
-				addParticle(p);
+			for (auto p : l.first) {
+				addParticle(p, l.second);
 			}
 		}
 		_particles.erase(e->getContext());
+		pFR->deleteParticleRegistry(e);
 		delete e;
 		_erased.pop();
 	}
