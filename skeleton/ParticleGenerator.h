@@ -23,7 +23,7 @@ protected:
 	float time, loop_time;
 public:
 	ParticleGenerator(Vector3 mean_pos, Vector3 mean_vel, float erase_time, int num_particles);
-	virtual ~ParticleGenerator() { for (auto part : _particle_models) delete part; }
+	virtual ~ParticleGenerator();
 	void setParticle(Particle* _model, std::string _type);
 	void addModelParticle(Particle* _model, std::string _type, bool isFirstGenerator = false);
 	void addGenerationLoop(float loop_time);

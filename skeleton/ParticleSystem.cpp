@@ -69,13 +69,14 @@ ParticleSystem::~ParticleSystem() {
 		delete particle;
 	}
 
+	for (auto gens : _force_generators) {
+		delete gens;
+	}
+
 	for (auto gens : _particles_generators) {
 		delete gens;
 	}
 
-	for (auto gens : _force_generators) {
-		delete gens;
-	}
 	delete pFR;
 }
 

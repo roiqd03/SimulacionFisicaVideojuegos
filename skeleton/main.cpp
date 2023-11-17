@@ -12,8 +12,7 @@
 
 #include "Gun.h"
 #include "FireworkSystem.h"
-#include "ParticleForceRegistry.h"
-#include "GravityForceGenerator.h"
+#include "PruebasSystem.h"
 
 std::string display_text = "This is a test";
 
@@ -72,8 +71,8 @@ void initPhysics(bool interactive)
 	//part->setDamping(0.99f);
 	
 	
-	BoundingBox* box = new BoundingBox({500,1000,500});
-	partSystem = new FireworkSystem();
+	//partSystem = new FireworkSystem();
+	partSystem = new PruebasSystem();
 }
 
 
@@ -146,7 +145,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	}
 	case 'U':
-		static_cast<FireworkSystem*>(partSystem)->explosion();
+		static_cast<PruebasSystem*>(partSystem)->explosion();
 	default:
 		break;
 	}

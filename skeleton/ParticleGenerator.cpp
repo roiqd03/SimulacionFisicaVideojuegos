@@ -39,3 +39,8 @@ void ParticleGenerator::addForceGenerator(ForceGenerator* fG) {
 	_force_generators.push_front(fG);
 	fG->addContext(&_force_generators, _force_generators.begin());
 }
+
+ParticleGenerator::~ParticleGenerator() {
+	for (auto part : _particle_models) delete part;
+	for (auto forces : _force_generators) forces->quitContext(&_force_generators);
+}
