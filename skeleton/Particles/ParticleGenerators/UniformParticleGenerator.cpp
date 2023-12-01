@@ -1,6 +1,6 @@
 #include "UniformParticleGenerator.h"
 
-#include "Particle.h"
+#include "../ParticleTypes/Particle.h"
 
 UniformParticleGenerator::UniformParticleGenerator(Vector3 mean_pos, Vector3 mean_vel,
 	float erase_time, int num_particles, Vector3 pos_width, Vector3 vel_width, float time_width) :

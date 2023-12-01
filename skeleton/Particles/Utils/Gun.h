@@ -1,5 +1,5 @@
 #pragma once
-#include "Projectile.h"
+#include "../ParticleTypes/Projectile.h"
 #include <stack>
 
 class Gun 

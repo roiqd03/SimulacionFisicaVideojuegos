@@ -10,9 +10,10 @@
 
 #include <iostream>
 
-#include "Gun.h"
-#include "FireworkSystem.h"
-#include "PruebasSystem.h"
+#include "Particles/Utils/Gun.h"
+#include "Particles/ParticleSystems/FireworkSystem.h"
+#include "Particles/ParticleSystems/PruebasSystem.h"
+#include "Particles/ParticleSystems/SpringsSystem.h"
 
 std::string display_text = "This is a test";
 
@@ -72,7 +73,8 @@ void initPhysics(bool interactive)
 	
 	
 	//partSystem = new FireworkSystem();
-	partSystem = new PruebasSystem();
+	//partSystem = new PruebasSystem();
+	partSystem = new SpringsSystem();
 }
 
 
@@ -131,6 +133,41 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	}
 	case 'G':
 	{
+		static_cast<SpringsSystem*>(partSystem)->applyDirectionalForce();
+		break;
+	}
+	case 'Y':
+	{
+		static_cast<SpringsSystem*>(partSystem)->changeK(1);
+		break;
+	}
+	case 'H':
+	{
+		static_cast<SpringsSystem*>(partSystem)->changeK(-1);
+		break;
+	}
+	case 'U':
+	{
+		static_cast<SpringsSystem*>(partSystem)->changeMass(-0.0001);
+		break;
+	}
+	case 'J':
+	{
+		static_cast<SpringsSystem*>(partSystem)->changeMass(0.0001);
+		break;
+	}
+	case 'I':
+	{
+		static_cast<SpringsSystem*>(partSystem)->changeVolume(100);
+		break;
+	}
+	case 'K':
+	{
+		static_cast<SpringsSystem*>(partSystem)->changeVolume(-100);
+		break;
+	}
+	/*case 'G':
+	{
 		g->shoot(g->PISTOLA);
 		break;
 	}
@@ -145,7 +182,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	}
 	case 'U':
-		static_cast<PruebasSystem*>(partSystem)->explosion();
+		static_cast<PruebasSystem*>(partSystem)->explosion();*/
 	default:
 		break;
 	}

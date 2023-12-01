@@ -1,5 +1,5 @@
 #pragma once
-#include "Particle.h"
+#include "../ParticleTypes/Particle.h"
 #include <cmath>
 
 class ParticleGenerator;

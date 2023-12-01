@@ -1,14 +1,31 @@
 #include "Particle.h"
 
-Particle::Particle(float r, Vector4 color, float life_time) : vel({0,0,0}), radius(r), ac({ 0,0,0 }),
+Particle::Particle(Vector3 size, Vector4 color, float life_time) : vel({0,0,0}), size(size), ac({ 0,0,0 }),
 	damping(1), inv_mass(0), time(0), color(color), life_time(life_time), generator(nullptr), force({0,0,0}) {
 	
 	pose = physx::PxTransform({0,0,0});
 	Vector4 c = color;
-	physx::PxSphereGeometry sphere(r);
-	physx::PxShape* shape = CreateShape(sphere);
+	physx::PxShape* shape;
+	volume = size.x * size.y * size.z;
+	physx::PxBoxGeometry cube(size);
+	shape = CreateShape(cube);
+	
 	renderItem = new RenderItem(shape, &pose, c);
 }
+
+Particle::Particle(float radius, Vector4 color, float life_time) : vel({ 0,0,0 }), size({ radius,radius,radius }), ac({ 0,0,0 }),
+damping(1), inv_mass(0), time(0), color(color), life_time(life_time), generator(nullptr), force({ 0,0,0 }) {
+
+	pose = physx::PxTransform({ 0,0,0 });
+	Vector4 c = color;
+	physx::PxShape* shape;
+	volume = radius * radius * radius;
+	physx::PxSphereGeometry sphere(radius);
+	shape = CreateShape(sphere);
+
+	renderItem = new RenderItem(shape, &pose, c);
+}
+
 
 Particle::~Particle() {
 	if(generator != nullptr) delete generator;
@@ -32,7 +49,7 @@ void Particle::setAcceleration(Vector3 ac) { this->ac = ac; }
 void Particle::setDamping(float d) { damping = d; }
 //void Particle::setGravity(Vector3 g) { gravity = g; }
 Particle* Particle::clone() const {
-	Particle* _particle = new Particle(radius, color, life_time);
+	Particle* _particle = new Particle(size, color, life_time);
 
 	_particle->pose.p = pose.p;
 	_particle->vel = vel;

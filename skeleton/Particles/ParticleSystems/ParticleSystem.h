@@ -1,10 +1,10 @@
 #pragma once
-#include "Particle.h"
+#include "../ParticleTypes/Particle.h"
 #include <list>
 #include <stack>
 #include <exception>
-#include "BoundingBox.h"
-#include "ParticleForceRegistry.h"
+#include "../Utils/BoundingBox.h"
+#include "../ForceGenerators/ParticleForceRegistry.h"
 
 class ParticleSystem
 {

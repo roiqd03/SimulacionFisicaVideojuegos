@@ -1,6 +1,6 @@
 #pragma once
 #include "ForceGenerator.h"
-#include "BoundingBox.h"
+#include "../Utils/BoundingBox.h"
 
 class ParticleDragGenerator : public ForceGenerator
 {

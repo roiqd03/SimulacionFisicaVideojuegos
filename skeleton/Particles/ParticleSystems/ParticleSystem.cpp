@@ -47,7 +47,7 @@ void ParticleSystem::integrate(float t) {
 
 	for (auto particle : _particles) {
 		particle->integrate(t);
-		if (particle->getTime() > particle->getLifeTime() || (box != nullptr && !box->contains(particle->getPosition())))
+		if ((particle->getLifeTime() != -1 && particle->getTime() > particle->getLifeTime()) || (box != nullptr && !box->contains(particle->getPosition())))
 			pushErasedParticles(particle);
 	}
 

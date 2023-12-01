@@ -2,7 +2,7 @@
 
 
 #include "Particle.h"
-#include "Gun.h"
+#include "../Utils/Gun.h"
 #include <iostream>
 
 Projectile::Projectile(float radius, Vector4 color, float life_time, Gun* gun) : Particle(radius, color, life_time), gun(gun) {}

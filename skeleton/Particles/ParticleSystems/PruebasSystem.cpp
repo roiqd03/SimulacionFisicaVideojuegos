@@ -1,9 +1,9 @@
 #include "PruebasSystem.h"
-#include "GaussianParticleGenerator.h"
-#include "GravityForceGenerator.h"
-#include "ParticleDragGenerator.h"
-#include "WhirlWindGenerator.h"
-#include "ExplosionGenerator.h"
+#include "../ParticleGenerators/GaussianParticleGenerator.h"
+#include "../ForceGenerators/GravityForceGenerator.h"
+#include "../ForceGenerators/ParticleDragGenerator.h"
+#include "../ForceGenerators/WhirlWindGenerator.h"
+#include "../ForceGenerators/ExplosionGenerator.h"
 
 PruebasSystem::PruebasSystem(BoundingBox* bb) : ParticleSystem(bb) {
 	g = new GaussianParticleGenerator({ 300,0,0 }, { 0,0,0 }, 30, 1, { 5,5,5 }, { 0.01,0.01,0.01 }, 1);
