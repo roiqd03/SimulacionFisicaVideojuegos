@@ -34,23 +34,23 @@ RigidSolidSystem::RigidSolidSystem(BoundingBox* bb, physx::PxPhysics* physics, p
 	p->setInvMass(7);
 	g->addModelParticle(p, "BLUE", true);
 
-	p = new RigidSolid({5, 5, 5}, {1,0,0,1}, 0, false, physics, scene);
-	p->setInvMass(2);
-	g->addModelParticle(p, "RED", true);
+	Particle* p2 = new Particle({5, 5, 5}, {1,0,0,1}, 0);
+	p2->setInvMass(1.0f/15);
+	g->addModelParticle(p2, "RED", true);
 
-	p = new RigidSolid(2, { 0,1,0,1 }, 0, false, physics, scene);
-	p->setInvMass(1.0f / 10);
-	g1->addModelParticle(p, "GREEN", true);
+	p2 = new Particle(2, { 0,1,0,1 }, 0);
+	p2->setInvMass(1.0f / 10);
+	g1->addModelParticle(p2, "GREEN", true);
 
 	p = new RigidSolid({ 2, 2, 2 }, { 1,1,0,1 }, 0, false, physics, scene);
 	p->setInvMass(1);
 	g1->addModelParticle(p, "YELLOW", true);
 
-	p = new RigidSolid({ 3, 3, 3 }, { 0,1,1,1 }, 0, false, physics, scene);
-	p->setInvMass(40);
-	g2->addModelParticle(p, "CYAN", true);
+	p2 = new Particle({ 3, 3, 3 }, { 0,1,1,1 }, 0);
+	p2->setInvMass(40);
+	g2->addModelParticle(p2, "CYAN", true);
 
-	p = new RigidSolid(0.5, { 1,0,1,1 }, 0, false, physics, scene);
+	p = new RigidSolid({ 0.5, 0.5, 0.5 }, { 1,0,1,1 }, 0, false, physics, scene);
 	p->setInvMass(1.0f / 3);
 	g2->addModelParticle(p, "PURPLE", true);
 

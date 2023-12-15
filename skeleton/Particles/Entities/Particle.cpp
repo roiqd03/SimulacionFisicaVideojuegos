@@ -1,7 +1,7 @@
 #include "Particle.h"
 
 Particle::Particle(Vector3 size, Vector4 color, float life_time) : Entity(size, color, life_time), vel({0,0,0}), ac({ 0,0,0 }),
-	damping(1), inv_mass(0) {
+	damping(1), inv_mass(0){
 	
 	sphereShape = false;
 	pose = physx::PxTransform({0,0,0});

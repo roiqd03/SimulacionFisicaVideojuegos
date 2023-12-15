@@ -11,10 +11,8 @@
 
 #include <iostream>
 
-#include "Particles/Utils/Gun.h"
 #include "Particles/Systems/FireworkSystem.h"
 #include "Particles/Systems/PruebasSystem.h"
-#include "Particles/Systems/SpringsSystem.h"
 #include "Particles/Systems/RigidSolidSystem.h"
 
 std::string display_text = "This is a test";
@@ -37,8 +35,6 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
-Gun* g = nullptr;
-Entity* part = nullptr;
 ParticleSystem* partSystem = nullptr;
 
 
@@ -65,14 +61,6 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
-
-	/*g = new Gun();
-	part = new Particle(10, { 255,0,0,1 });
-	part->setVelocity({ 0,10,0 });
-	part->setPosition({ 0,0,0});*/
-	//part->setAcceleration({ 0,10,0 });
-	//part->setDamping(0.99f);
-	
 	
 	//partSystem = new FireworkSystem();
 	//partSystem = new PruebasSystem();
@@ -86,12 +74,8 @@ void initPhysics(bool interactive)
 void stepPhysics(bool interactive, double t)
 {
 	PX_UNUSED(interactive);
-	/*g->integrate(t);
-	part->integrate(t);*/
 	partSystem->integrate(t);
 	
-
-	//g->eraseParticles();
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 }
@@ -102,9 +86,6 @@ void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
 
-	//delete g;
-	//delete part;
-	 
 	delete partSystem;
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++

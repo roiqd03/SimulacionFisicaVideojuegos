@@ -27,7 +27,6 @@ public:
 	virtual Entity* clone() const;
 	virtual void onDeath(){};
 
-	Vector3 force;
 	virtual void addForce(const Vector3& f) { force += f; }
 protected:
 	Vector3 ac;
