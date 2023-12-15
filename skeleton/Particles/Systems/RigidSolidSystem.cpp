@@ -7,7 +7,7 @@
 #include "../Entities/RigidSolid.h"
 
 RigidSolidSystem::RigidSolidSystem(BoundingBox* bb, physx::PxPhysics* physics, physx::PxScene* scene) : ParticleSystem(bb) {
-	g = new GaussianParticleGenerator({ 300,0,0 }, { 0,0,0 }, 30, 1, { 5,5,5 }, { 0.01,0.01,0.01 }, 1);
+	g = new GaussianParticleGenerator({ 300,0,0 }, { 0,0,0 }, 30, 1, { 10,10,10 }, { 0.01,0.01,0.01 }, 1);
 	GaussianParticleGenerator* g1 = new GaussianParticleGenerator({ -150,0,0 }, { 0,40,0 }, 10, 1, { 5,5,5 }, { 0.01,0.01,0.01 }, 1, 300);
 	GaussianParticleGenerator* g2 = new GaussianParticleGenerator({ 0,0,0 }, { 0,40,0 }, 10, 1, { 5,5,5 }, { 0.01,0.01,0.01 }, 1, 300);
 	GaussianParticleGenerator* g3 = new GaussianParticleGenerator({ 150,0,0 }, { 0,40,0 }, 10, 1, { 5,5,5 }, { 0.01,0.01,0.01 }, 1, 300);
@@ -34,11 +34,11 @@ RigidSolidSystem::RigidSolidSystem(BoundingBox* bb, physx::PxPhysics* physics, p
 	p->setInvMass(7);
 	g->addModelParticle(p, "BLUE", true);
 
-	Particle* p2 = new Particle({5, 5, 5}, {1,0,0,1}, 0);
-	p2->setInvMass(1.0f/15);
-	g->addModelParticle(p2, "RED", true);
+	p = new RigidSolid({5, 5, 5}, {1,0,0,1}, 0, false, physics, scene);
+	p->setInvMass(1.0f/3);
+	g->addModelParticle(p, "RED", true);
 
-	p2 = new Particle(2, { 0,1,0,1 }, 0);
+	Particle* p2 = new Particle(2, { 0,1,0,1 }, 0);
 	p2->setInvMass(1.0f / 10);
 	g1->addModelParticle(p2, "GREEN", true);
 
