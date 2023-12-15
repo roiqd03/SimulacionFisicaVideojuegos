@@ -12,15 +12,15 @@
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="Particles\Utils\BoundingBox.cpp" />
     <ClCompile Include="Particles\Utils\Gun.cpp" />
-    <ClCompile Include="Particles\ParticleTypes\Firework.cpp" />
-    <ClCompile Include="Particles\ParticleTypes\Particle.cpp" />
-    <ClCompile Include="Particles\ParticleTypes\Projectile.cpp" />
-    <ClCompile Include="Particles\ParticleSystems\FireworkSystem.cpp" />
-    <ClCompile Include="Particles\ParticleSystems\ParticleSystem.cpp" />
-    <ClCompile Include="Particles\ParticleSystems\PruebasSystem.cpp" />
-    <ClCompile Include="Particles\ParticleGenerators\GaussianParticleGenerator.cpp" />
-    <ClCompile Include="Particles\ParticleGenerators\ParticleGenerator.cpp" />
-    <ClCompile Include="Particles\ParticleGenerators\UniformParticleGenerator.cpp" />
+    <ClCompile Include="Particles\Entities\Firework.cpp" />
+    <ClCompile Include="Particles\Entities\Particle.cpp" />
+    <ClCompile Include="Particles\Entities\Projectile.cpp" />
+    <ClCompile Include="Particles\Systems\FireworkSystem.cpp" />
+    <ClCompile Include="Particles\Systems\ParticleSystem.cpp" />
+    <ClCompile Include="Particles\Systems\PruebasSystem.cpp" />
+    <ClCompile Include="Particles\Generators\GaussianParticleGenerator.cpp" />
+    <ClCompile Include="Particles\Generators\ParticleGenerator.cpp" />
+    <ClCompile Include="Particles\Generators\UniformParticleGenerator.cpp" />
     <ClCompile Include="Particles\ForceGenerators\AnchoredSpringFG.cpp" />
     <ClCompile Include="Particles\ForceGenerators\ExplosionGenerator.cpp" />
     <ClCompile Include="Particles\ForceGenerators\ForceGenerator.cpp" />
@@ -29,9 +29,12 @@
     <ClCompile Include="Particles\ForceGenerators\ParticleForceRegistry.cpp" />
     <ClCompile Include="Particles\ForceGenerators\SpringForceGenerator.cpp" />
     <ClCompile Include="Particles\ForceGenerators\WhirlWindGenerator.cpp" />
-    <ClCompile Include="Particles\ParticleSystems\SpringsSystem.cpp" />
+    <ClCompile Include="Particles\Systems\SpringsSystem.cpp" />
     <ClCompile Include="Particles\ForceGenerators\ElasticBandForceGenerator.cpp" />
     <ClCompile Include="Particles\ForceGenerators\BuoyancyForceGenerator.cpp" />
+    <ClCompile Include="Particles\Entities\Entity.cpp" />
+    <ClCompile Include="Particles\Entities\RigidSolid.cpp" />
+    <ClCompile Include="Particles\Systems\RigidSolidSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -45,15 +48,15 @@
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="Particles\Utils\BoundingBox.h" />
     <ClInclude Include="Particles\Utils\Gun.h" />
-    <ClInclude Include="Particles\ParticleTypes\Firework.h" />
-    <ClInclude Include="Particles\ParticleTypes\Particle.h" />
-    <ClInclude Include="Particles\ParticleTypes\Projectile.h" />
-    <ClInclude Include="Particles\ParticleSystems\FireworkSystem.h" />
-    <ClInclude Include="Particles\ParticleSystems\ParticleSystem.h" />
-    <ClInclude Include="Particles\ParticleSystems\PruebasSystem.h" />
-    <ClInclude Include="Particles\ParticleGenerators\GaussianParticleGenerator.h" />
-    <ClInclude Include="Particles\ParticleGenerators\ParticleGenerator.h" />
-    <ClInclude Include="Particles\ParticleGenerators\UniformParticleGenerator.h" />
+    <ClInclude Include="Particles\Entities\Firework.h" />
+    <ClInclude Include="Particles\Entities\Particle.h" />
+    <ClInclude Include="Particles\Entities\Projectile.h" />
+    <ClInclude Include="Particles\Systems\FireworkSystem.h" />
+    <ClInclude Include="Particles\Systems\ParticleSystem.h" />
+    <ClInclude Include="Particles\Systems\PruebasSystem.h" />
+    <ClInclude Include="Particles\Generators\GaussianParticleGenerator.h" />
+    <ClInclude Include="Particles\Generators\ParticleGenerator.h" />
+    <ClInclude Include="Particles\Generators\UniformParticleGenerator.h" />
     <ClInclude Include="Particles\ForceGenerators\AnchoredSpringFG.h" />
     <ClInclude Include="Particles\ForceGenerators\ExplosionGenerator.h" />
     <ClInclude Include="Particles\ForceGenerators\ForceGenerator.h" />
@@ -62,10 +65,13 @@
     <ClInclude Include="Particles\ForceGenerators\ParticleForceRegistry.h" />
     <ClInclude Include="Particles\ForceGenerators\SpringForceGenerator.h" />
     <ClInclude Include="Particles\ForceGenerators\WhirlWindGenerator.h" />
-    <ClInclude Include="Particles\ParticleSystems\SpringsSystem.h" />
+    <ClInclude Include="Particles\Systems\SpringsSystem.h" />
     <ClInclude Include="Particles\ForceGenerators\DirectionalForce.h" />
     <ClInclude Include="Particles\ForceGenerators\ElasticBandForceGenerator.h" />
     <ClInclude Include="Particles\ForceGenerators\BuoyancyForceGenerator.h" />
+    <ClInclude Include="Particles\Entities\Entity.h" />
+    <ClInclude Include="Particles\Entities\RigidSolid.h" />
+    <ClInclude Include="Particles\Systems\RigidSolidSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

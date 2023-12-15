@@ -64,7 +64,7 @@ void Gun::eraseParticles() {
 	}
 }
 
-void Gun::pushErasedParticles(Particle* p) {
+void Gun::pushErasedParticles(Entity* p) {
 	erased.push(p);
 }
 

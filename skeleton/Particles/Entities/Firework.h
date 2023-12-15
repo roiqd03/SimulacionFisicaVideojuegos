@@ -1,6 +1,6 @@
 #pragma once
 #include "Particle.h"
-#include "../ParticleGenerators/GaussianParticleGenerator.h"
+#include "../Generators/GaussianParticleGenerator.h"
 
 class Firework : public Particle
 {
@@ -16,6 +16,6 @@ public:
 	Firework(float size, Vector4 color, float life_time, int gen, int min_particles_generated, int max_particles_generated);
 	virtual ~Firework(){};
 	void onDeath() override;
-	Particle* clone() const override;
+	Entity* clone() const override;
 };
 

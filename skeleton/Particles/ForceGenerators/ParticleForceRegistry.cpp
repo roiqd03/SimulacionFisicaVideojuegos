@@ -12,10 +12,10 @@ std::unordered_set<ForceGenerator*> ParticleForceRegistry::updateForces(double d
 	return s;
 }
 
-void ParticleForceRegistry::addRegistry(ForceGenerator* fg, Particle* p) {
+void ParticleForceRegistry::addRegistry(ForceGenerator* fg, Entity* p) {
 	insert({ p, fg });
 }
 
-void ParticleForceRegistry::deleteParticleRegistry(Particle* p) {
+void ParticleForceRegistry::deleteParticleRegistry(Entity* p) {
 	this->erase(p);
 }

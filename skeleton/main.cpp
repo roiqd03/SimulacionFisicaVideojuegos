@@ -1,6 +1,7 @@
 #include <ctype.h>
 
 #include <PxPhysicsAPI.h>
+#include <PxRigidDynamic.h>
 
 #include <vector>
 
@@ -11,9 +12,10 @@
 #include <iostream>
 
 #include "Particles/Utils/Gun.h"
-#include "Particles/ParticleSystems/FireworkSystem.h"
-#include "Particles/ParticleSystems/PruebasSystem.h"
-#include "Particles/ParticleSystems/SpringsSystem.h"
+#include "Particles/Systems/FireworkSystem.h"
+#include "Particles/Systems/PruebasSystem.h"
+#include "Particles/Systems/SpringsSystem.h"
+#include "Particles/Systems/RigidSolidSystem.h"
 
 std::string display_text = "This is a test";
 
@@ -36,7 +38,7 @@ PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
 Gun* g = nullptr;
-Particle* part = nullptr;
+Entity* part = nullptr;
 ParticleSystem* partSystem = nullptr;
 
 
@@ -57,7 +59,7 @@ void initPhysics(bool interactive)
 
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
-	sceneDesc.gravity = PxVec3(0.0f, -9.8f, 0.0f);
+	sceneDesc.gravity = PxVec3(0.0f, 0.0f, 0.0f);
 	gDispatcher = PxDefaultCpuDispatcherCreate(2);
 	sceneDesc.cpuDispatcher = gDispatcher;
 	sceneDesc.filterShader = contactReportFilterShader;
@@ -74,7 +76,7 @@ void initPhysics(bool interactive)
 	
 	//partSystem = new FireworkSystem();
 	//partSystem = new PruebasSystem();
-	partSystem = new SpringsSystem();
+	partSystem = new RigidSolidSystem(nullptr, gPhysics, gScene);
 }
 
 
@@ -146,26 +148,6 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		static_cast<SpringsSystem*>(partSystem)->changeK(-1);
 		break;
 	}
-	case 'U':
-	{
-		static_cast<SpringsSystem*>(partSystem)->changeMass(-0.0001);
-		break;
-	}
-	case 'J':
-	{
-		static_cast<SpringsSystem*>(partSystem)->changeMass(0.0001);
-		break;
-	}
-	case 'I':
-	{
-		static_cast<SpringsSystem*>(partSystem)->changeVolume(100);
-		break;
-	}
-	case 'K':
-	{
-		static_cast<SpringsSystem*>(partSystem)->changeVolume(-100);
-		break;
-	}
 	/*case 'G':
 	{
 		g->shoot(g->PISTOLA);
@@ -180,9 +162,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 		g->shoot(g->TANQUE);
 		break;
-	}
+	}*/
 	case 'U':
-		static_cast<PruebasSystem*>(partSystem)->explosion();*/
+		static_cast<PruebasSystem*>(partSystem)->explosion();
 	default:
 		break;
 	}

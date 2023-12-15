@@ -4,7 +4,7 @@ GravityForceGenerator::GravityForceGenerator(const Vector3& g) : ForceGenerator(
 	setGravity(g);
 }
 
-bool GravityForceGenerator::updateForce(Particle* particle, double t) {
+bool GravityForceGenerator::updateForce(Entity* particle, double t) {
 	if (updateTime(t, false)) {
 		if (fabs(particle->getInvMass()) < 1e-10)
 			return true;

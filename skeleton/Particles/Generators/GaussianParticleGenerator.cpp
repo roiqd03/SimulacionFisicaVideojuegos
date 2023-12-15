@@ -1,6 +1,6 @@
 #include "GaussianParticleGenerator.h"
 
-#include "../ParticleTypes/Particle.h"
+#include "../Entities/Entity.h"
 
 GaussianParticleGenerator::GaussianParticleGenerator(Vector3 mean_pos, Vector3 mean_vel,
 	float erase_time, int num_particles, Vector3 std_dev_pos, Vector3 std_dev_vel, float std_dev_time) :
@@ -28,10 +28,10 @@ GaussianParticleGenerator::~GaussianParticleGenerator() {
 	delete time;
 }
 
-std::list<Particle*> GaussianParticleGenerator::generateParticles() {
-	std::list<Particle*> particles;
+std::list<Entity*> GaussianParticleGenerator::generateParticles() {
+	std::list<Entity*> particles;
 	for (int i = 0; i < num_particles; ++i) {
-		Particle* p = _particle_models[(rand() % _particle_models.size())]->clone();
+		Entity* p = _particle_models[(rand() % _particle_models.size())]->clone();
 		p->setPosition(mean_pos + Vector3((*posX)(generator), (*posY)(generator), (*posZ)(generator)));
 		p->setVelocity({ (*velX)(generator), (*velY)(generator), (*velZ)(generator) });
 		p->setLifeTime((*time)(generator));

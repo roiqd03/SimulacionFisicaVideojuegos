@@ -1,6 +1,6 @@
 #include "UniformParticleGenerator.h"
 
-#include "../ParticleTypes/Particle.h"
+#include "../Entities/Entity.h"
 
 UniformParticleGenerator::UniformParticleGenerator(Vector3 mean_pos, Vector3 mean_vel,
 	float erase_time, int num_particles, Vector3 pos_width, Vector3 vel_width, float time_width) :
@@ -30,10 +30,10 @@ UniformParticleGenerator::~UniformParticleGenerator() {
 	delete time;
 }
 
-std::list<Particle*> UniformParticleGenerator::generateParticles() {
-	std::list<Particle*> particles;
+std::list<Entity*> UniformParticleGenerator::generateParticles() {
+	std::list<Entity*> particles;
 	for (int i = 0; i < num_particles; ++i) {
-		Particle* p = _particle_models[(rand() % _particle_models.size())]->clone();
+		Entity* p = _particle_models[(rand() % _particle_models.size())]->clone();
 		p->setPosition(mean_pos + Vector3((*posX)(generator), (*posY)(generator), (*posZ)(generator)));
 		p->setVelocity({ (*velX)(generator), (*velY)(generator), (*velZ)(generator) });
 		p->setLifeTime((*time)(generator));

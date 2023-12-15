@@ -5,6 +5,7 @@
 #include "../ForceGenerators/GravityForceGenerator.h"
 #include "../ForceGenerators/DirectionalForce.h"
 #include "../ForceGenerators/BuoyancyForceGenerator.h"
+#include "../Entities/RigidSolid.h"
 
 SpringsSystem::SpringsSystem() : ParticleSystem(nullptr) {
 	aSFG = new AnchoredSpringFG(1, 20, {200,20,0});
@@ -108,16 +109,4 @@ void SpringsSystem::applyDirectionalForce() {
 
 void SpringsSystem::changeK(float k) {
 	aSFG->setK(aSFG->getK() + k);
-}
-
-void SpringsSystem::changeMass(float k) {
-	float aux = particleForBuoyancy->getInvMass() + k;
-	if (aux >= 1/50.0f) aux = 1/50.0f;
-	particleForBuoyancy->setInvMass(aux);
-}
-
-void SpringsSystem::changeVolume(float k) {
-	float aux = particleForBuoyancy->getVolume() + k;
-	if (aux <= 0) aux = 0;
-	particleForBuoyancy->setVolume(aux);
 }

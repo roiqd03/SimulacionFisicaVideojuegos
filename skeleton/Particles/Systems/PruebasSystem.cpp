@@ -1,5 +1,5 @@
 #include "PruebasSystem.h"
-#include "../ParticleGenerators/GaussianParticleGenerator.h"
+#include "../Generators/GaussianParticleGenerator.h"
 #include "../ForceGenerators/GravityForceGenerator.h"
 #include "../ForceGenerators/ParticleDragGenerator.h"
 #include "../ForceGenerators/WhirlWindGenerator.h"

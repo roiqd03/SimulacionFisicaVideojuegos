@@ -1,4 +1,5 @@
 #include "AnchoredSpringFG.h"
+#include "../Entities/Particle.h"
 
 AnchoredSpringFG::AnchoredSpringFG(double k, double resting, const Vector3& anchor_pos) : SpringForceGenerator(k, resting, nullptr) {
 	_other = new Particle({ 3,3,3 }, { 0,0,0,1 }, -1);

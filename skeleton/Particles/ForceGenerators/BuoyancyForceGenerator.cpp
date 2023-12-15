@@ -1,4 +1,5 @@
 #include "BuoyancyForceGenerator.h"
+#include "../Entities/Particle.h"
 
 BuoyancyForceGenerator::BuoyancyForceGenerator(Vector3 pos, Vector3 dim, float d, float g) : ForceGenerator("Flotación", -1) {
 	_bb = new BoundingBox(- dim / 2, dim / 2);
@@ -11,7 +12,7 @@ BuoyancyForceGenerator::BuoyancyForceGenerator(Vector3 pos, Vector3 dim, float d
 	_height_limit = pos.y + dim.y / 2;
 }
 
-bool BuoyancyForceGenerator::updateForce(Particle* particle, double t) {
+bool BuoyancyForceGenerator::updateForce(Entity* particle, double t) {
 	Vector3 pos_particle = particle->getPosition();
 	float size = particle->getSize().y;
 	if (_bb->contains(pos_particle - Vector3(0, size / 2, 0))) {

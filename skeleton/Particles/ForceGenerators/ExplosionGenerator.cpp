@@ -4,7 +4,7 @@
 ExplosionGenerator::ExplosionGenerator(Vector3 origin, int k, float radius, int tau, int explosionTime) : ForceGenerator("Explosion", explosionTime), 
 	origin(origin), k(k), radius(radius), tau(tau) {}
 
-bool ExplosionGenerator::updateForce(Particle* particle, double t) {
+bool ExplosionGenerator::updateForce(Entity* particle, double t) {
 	if (updateTime(t, false)) {
 		if (fabs(particle->getInvMass()) < 1e-10)
 			return true;

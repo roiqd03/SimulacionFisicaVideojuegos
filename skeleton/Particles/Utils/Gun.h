@@ -1,5 +1,5 @@
 #pragma once
-#include "../ParticleTypes/Projectile.h"
+#include "../Entities/Projectile.h"
 #include <stack>
 
 class Gun 
@@ -10,10 +10,10 @@ public:
 	enum TypeOfShot { PISTOLA, CAÑON, TANQUE };
 	void shoot(TypeOfShot t);
 	void integrate(float t);
-	void pushErasedParticles(Particle* p);
+	void pushErasedParticles(Entity* p);
 	void eraseParticles();
 private:
-	std::list<Particle*> v;
-	std::stack<Particle*> erased;
+	std::list<Entity*> v;
+	std::stack<Entity*> erased;
 	const int maxParticleLifeTime = 10;
 };

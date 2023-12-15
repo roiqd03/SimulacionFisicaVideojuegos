@@ -1,5 +1,5 @@
 #pragma once
-#include "../ParticleTypes/Particle.h"
+#include "../Entities/Entity.h"
 #include <cmath>
 
 class ParticleGenerator;
@@ -12,7 +12,7 @@ public:
 			gens.first->erase(gens.second);
 		}
 	}
-	virtual bool updateForce(Particle* particle, double duration) = 0;
+	virtual bool updateForce(Entity* particle, double duration) = 0;
 	bool updateTime(double t, bool sum = true);
 	void addContext(std::list<ForceGenerator*>* l, std::list<ForceGenerator*>::iterator pG) { myGenerators.insert({ l, pG }); }
 	void quitContext(std::list<ForceGenerator*>* l) { myGenerators.erase(l); }

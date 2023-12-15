@@ -5,7 +5,7 @@ ParticleSystem::ParticleSystem(BoundingBox* boundingBox) :
 	pFR = new ParticleForceRegistry();
 }
 
-void ParticleSystem::addParticle(Particle* p, ParticleGenerator* pG) {
+void ParticleSystem::addParticle(Entity* p, ParticleGenerator* pG) {
 	_particles.push_front(p);
 	p->setContext(_particles.begin());
 	if (pG != nullptr) {
@@ -26,7 +26,7 @@ ParticleGenerator* ParticleSystem::getParticleGenerator(std::string name) {
 	else return (*it).second;
 }
 
-void ParticleSystem::addRegistry(ForceGenerator* g, Particle* p) {
+void ParticleSystem::addRegistry(ForceGenerator* g, Entity* p) {
 	pFR->addRegistry(g, p);
 	_force_generators.insert(g);
 }
@@ -98,6 +98,6 @@ void ParticleSystem::eraseParticles() {
 	}
 }
 
-void ParticleSystem::pushErasedParticles(Particle* p) {
+void ParticleSystem::pushErasedParticles(Entity* p) {
 	_erased.push(p);
 }

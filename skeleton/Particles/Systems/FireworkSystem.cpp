@@ -1,11 +1,11 @@
 #include "FireworkSystem.h"
-#include "../ParticleGenerators/GaussianParticleGenerator.h"
-#include "../ParticleGenerators/UniformParticleGenerator.h"
+#include "../Generators/GaussianParticleGenerator.h"
+#include "../Generators/UniformParticleGenerator.h"
 #include "../ForceGenerators/GravityForceGenerator.h"
 #include "../ForceGenerators/ParticleDragGenerator.h"
 #include "../ForceGenerators/WhirlWindGenerator.h"
 #include "../ForceGenerators/ExplosionGenerator.h"
-#include "../ParticleTypes/Firework.h"
+#include "../Entities/Firework.h"
 
 FireworkSystem::FireworkSystem(BoundingBox* bb) : ParticleSystem(bb) {
 

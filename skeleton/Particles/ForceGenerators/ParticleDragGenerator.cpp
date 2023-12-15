@@ -5,7 +5,7 @@ ParticleDragGenerator::ParticleDragGenerator(const Vector3 windVelocity, const f
 	windVelocity(windVelocity), _k1(k1), _k2(k2) {}
 
 
-bool ParticleDragGenerator::updateForce(Particle* particle, double t) {
+bool ParticleDragGenerator::updateForce(Entity* particle, double t) {
 	if (updateTime(t)) {
 		if (fabs(particle->getInvMass()) < 1e-10) return true;
 

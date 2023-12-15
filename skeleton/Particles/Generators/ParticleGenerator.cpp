@@ -1,5 +1,5 @@
 #include "ParticleGenerator.h"
-#include "../ParticleTypes/Particle.h"
+#include "../Entities/Entity.h"
 #include "../ForceGenerators/ForceGenerator.h"
 
 ParticleGenerator::ParticleGenerator(Vector3 mean_pos, Vector3 mean_vel, float erase_time, int num_particles) : 
@@ -8,11 +8,11 @@ ParticleGenerator::ParticleGenerator(Vector3 mean_pos, Vector3 mean_vel, float e
 	time(0) {}
 
 
-void ParticleGenerator::setParticle(Particle* _model, std::string _type) {
+void ParticleGenerator::setParticle(Entity* _model, std::string _type) {
 	_model = _particle_models[Particle_Type[_type]]->clone();
 }
 
-void ParticleGenerator::addModelParticle(Particle* _model, std::string _type, bool isFirstGenerator) {
+void ParticleGenerator::addModelParticle(Entity* _model, std::string _type, bool isFirstGenerator) {
 	_particle_models.push_back(_model);
 	_model->setInvisible();
 	Particle_Type[_type] = num_models;

@@ -6,7 +6,7 @@ class ExplosionGenerator : public ForceGenerator
 public:
 	ExplosionGenerator(Vector3 origin, int k, float radius, int tau, int explosionTime);
 	~ExplosionGenerator() {}
-	virtual bool updateForce(Particle* particle, double t);
+	virtual bool updateForce(Entity* particle, double t);
 
 private:
 	const Vector3 origin;

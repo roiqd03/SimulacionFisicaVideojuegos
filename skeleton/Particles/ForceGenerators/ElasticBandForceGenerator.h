@@ -4,8 +4,8 @@
 class ElasticBandForceGenerator : public SpringForceGenerator
 {
 public:
-	ElasticBandForceGenerator(double k, double resting_length, Particle* other);
-	virtual	bool updateForce(Particle* particle, double t);
+	ElasticBandForceGenerator(double k, double resting_length, Entity* other);
+	virtual	bool updateForce(Entity* particle, double t);
 	virtual ~ElasticBandForceGenerator(){}
 };
 

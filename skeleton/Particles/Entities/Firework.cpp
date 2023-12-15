@@ -28,7 +28,7 @@ void Firework::onDeath() {
 	}
 }
 
-Particle* Firework::clone() const {
+Entity* Firework::clone() const {
 	Firework* _particle = new Firework(size.x, color, life_time, gen, min_particles_generated, max_particles_generated);
 
 	_particle->pose.p = pose.p;

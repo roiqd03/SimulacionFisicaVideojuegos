@@ -14,7 +14,5 @@ public:
 	virtual ~SpringsSystem();
 	void applyDirectionalForce();
 	void changeK(float k);
-	void changeMass(float k);
-	void changeVolume(float k);
 };
 
