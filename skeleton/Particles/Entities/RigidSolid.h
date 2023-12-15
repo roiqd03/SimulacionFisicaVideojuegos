@@ -27,6 +27,7 @@ public:
 	virtual void onDeath() {};
 
 	virtual void addForce(const Vector3& f) { if (!isStatic) rb->addForce(f); }
+	virtual void setInvisible();
 protected:
 	bool sphereShape, isStatic;
 	physx::PxRigidBody* rb;

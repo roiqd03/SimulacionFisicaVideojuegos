@@ -3,8 +3,8 @@
 #include "../Entities/Entity.h"
 
 GaussianParticleGenerator::GaussianParticleGenerator(Vector3 mean_pos, Vector3 mean_vel,
-	float erase_time, int num_particles, Vector3 std_dev_pos, Vector3 std_dev_vel, float std_dev_time) :
-	ParticleGenerator(mean_pos, mean_vel, erase_time, num_particles), std_dev_pos(std_dev_pos), std_dev_vel(std_dev_vel),
+	float erase_time, int num_particles, Vector3 std_dev_pos, Vector3 std_dev_vel, float std_dev_time, int max_generation_particles) :
+	ParticleGenerator(mean_pos, mean_vel, erase_time, num_particles, max_generation_particles), std_dev_pos(std_dev_pos), std_dev_vel(std_dev_vel),
 	std_dev_time(std_dev_time)
 {
 	posX = new std::normal_distribution<float>(0, std_dev_pos.x);
@@ -37,6 +37,7 @@ std::list<Entity*> GaussianParticleGenerator::generateParticles() {
 		p->setLifeTime((*time)(generator));
 
 		particles.push_back(p);
+		particles_generated++;
 	}
 	return particles;
 }

@@ -133,7 +133,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 		break;
 	}
-	case 'G':
+	/*case 'G':
 	{
 		static_cast<SpringsSystem*>(partSystem)->applyDirectionalForce();
 		break;
@@ -147,24 +147,13 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 		static_cast<SpringsSystem*>(partSystem)->changeK(-1);
 		break;
-	}
-	/*case 'G':
-	{
-		g->shoot(g->PISTOLA);
-		break;
-	}
-	case 'H':
-	{
-		g->shoot(g->CAÑON);
-		break;
-	}
-	case 'J':
-	{
-		g->shoot(g->TANQUE);
-		break;
 	}*/
 	case 'U':
+		static_cast<RigidSolidSystem*>(partSystem)->explosion();
+		break;
+	case 'I':
 		static_cast<PruebasSystem*>(partSystem)->explosion();
+		break;
 	default:
 		break;
 	}

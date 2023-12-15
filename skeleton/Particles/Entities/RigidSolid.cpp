@@ -80,3 +80,9 @@ Entity* RigidSolid::clone() const {
 	}
 	return _rs;
 }
+
+void RigidSolid::setInvisible() {
+	if (isStatic) gScene->removeActor(*actor);
+	else gScene->removeActor(*rb);
+	Entity::setInvisible();
+}

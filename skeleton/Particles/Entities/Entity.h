@@ -27,7 +27,7 @@ public:
 	inline float getLifeTime() { return life_time; }
 	inline Vector4 getColor() { return color; }
 	inline void setLifeTime(float life_time) { this->life_time = life_time; }
-	void setInvisible();
+	virtual void setInvisible();
 	void setFirstGenerator(ParticleGenerator* myG) { firstGenerator = myG; };
 	void setContext(std::list<Entity*>::iterator);
 	std::list<Entity*>::iterator getContext();

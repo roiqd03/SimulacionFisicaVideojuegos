@@ -15,7 +15,7 @@ protected:
 	Vector3 pos_width;
 public:
 	UniformParticleGenerator(Vector3 mean_pos, Vector3 mean_vel, float erase_time,
-		int num_particles, Vector3 pos_width, Vector3 vel_width, float time_width);
+		int num_particles, Vector3 pos_width, Vector3 vel_width, float time_width, int max_generation_particles = -1);
 	virtual ~UniformParticleGenerator();
 	std::list<Entity*> generateParticles() override;
 };

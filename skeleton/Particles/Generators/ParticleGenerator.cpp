@@ -2,10 +2,10 @@
 #include "../Entities/Entity.h"
 #include "../ForceGenerators/ForceGenerator.h"
 
-ParticleGenerator::ParticleGenerator(Vector3 mean_pos, Vector3 mean_vel, float erase_time, int num_particles) : 
+ParticleGenerator::ParticleGenerator(Vector3 mean_pos, Vector3 mean_vel, float erase_time, int num_particles, int max_generation_particles) :
 	mean_pos(mean_pos), mean_vel(mean_vel), num_models(0), erase_time(erase_time), num_particles(num_particles),
 	generator(std::default_random_engine(std::chrono::system_clock::now().time_since_epoch().count())), generateLoop(false),
-	time(0) {}
+	time(0), max_generation_particles(max_generation_particles) {}
 
 
 void ParticleGenerator::setParticle(Entity* _model, std::string _type) {
@@ -25,7 +25,7 @@ void ParticleGenerator::addGenerationLoop(float loop_time) {
 	generateLoop = true;
 }
 
-bool ParticleGenerator::isLoopCompleted(float t) {
+bool ParticleGenerator::isLoopCompleted(double t) {
 	time += t;
 	if (time > loop_time) {
 		time = 0;
@@ -43,4 +43,8 @@ void ParticleGenerator::addForceGenerator(ForceGenerator* fG) {
 ParticleGenerator::~ParticleGenerator() {
 	for (auto part : _particle_models) delete part;
 	for (auto forces : _force_generators) forces->quitContext(&_force_generators);
+}
+
+bool ParticleGenerator::canGenerateParticles(double t) {
+	return hasLoop() && isLoopCompleted(t) && (max_generation_particles == -1 || particles_generated < max_generation_particles);
 }

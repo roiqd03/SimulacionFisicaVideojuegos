@@ -3,8 +3,8 @@
 #include "../Entities/Entity.h"
 
 UniformParticleGenerator::UniformParticleGenerator(Vector3 mean_pos, Vector3 mean_vel,
-	float erase_time, int num_particles, Vector3 pos_width, Vector3 vel_width, float time_width) :
-	ParticleGenerator(mean_pos, mean_vel, erase_time, num_particles), pos_width(pos_width), vel_width(vel_width)
+	float erase_time, int num_particles, Vector3 pos_width, Vector3 vel_width, float time_width, int max_generation_particles) :
+	ParticleGenerator(mean_pos, mean_vel, erase_time, num_particles, max_generation_particles), pos_width(pos_width), vel_width(vel_width)
 {
 	Vector3 vW = vel_width / 2;
 	Vector3 pW = pos_width / 2;
@@ -39,6 +39,7 @@ std::list<Entity*> UniformParticleGenerator::generateParticles() {
 		p->setLifeTime((*time)(generator));
 		
 		particles.push_back(p);
+		particles_generated++;
 	}
 	return particles;
 }

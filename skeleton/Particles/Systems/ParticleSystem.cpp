@@ -53,7 +53,7 @@ void ParticleSystem::integrate(float t) {
 
 	
 	for (auto gens : _particles_generators) {
-		if (gens->hasLoop() && gens->isLoopCompleted(t)) {
+		if (gens->canGenerateParticles(t)) {
 			auto particles = gens->generateParticles();
 			for (auto p : particles) {
 				addParticle(p, gens);
