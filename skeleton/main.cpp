@@ -11,9 +11,7 @@
 
 #include <iostream>
 
-#include "Particles/Systems/FireworkSystem.h"
-#include "Particles/Systems/PruebasSystem.h"
-#include "Particles/Systems/RigidSolidSystem.h"
+#include "GameManager.h"
 
 std::string display_text = "This is a test";
 
@@ -35,7 +33,7 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
-ParticleSystem* partSystem = nullptr;
+GameManager* GM = nullptr;
 
 
 // Initialize physics engine
@@ -64,7 +62,7 @@ void initPhysics(bool interactive)
 	
 	//partSystem = new FireworkSystem();
 	//partSystem = new PruebasSystem();
-	partSystem = new RigidSolidSystem(nullptr, gPhysics, gScene);
+	GM = new GameManager(gPhysics, gScene);
 }
 
 
@@ -74,10 +72,9 @@ void initPhysics(bool interactive)
 void stepPhysics(bool interactive, double t)
 {
 	PX_UNUSED(interactive);
-	partSystem->integrate(t);
+	GM->update(t);
 	
-	gScene->simulate(t);
-	gScene->fetchResults(true);
+	
 }
 
 // Function to clean data
@@ -86,7 +83,7 @@ void cleanupPhysics(bool interactive)
 {
 	PX_UNUSED(interactive);
 
-	delete partSystem;
+	delete GM;
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
 	gScene->release();
@@ -106,15 +103,17 @@ void keyPress(unsigned char key, const PxTransform& camera)
 {
 	PX_UNUSED(camera);
 
+
+	GM->processInput(toupper(key));
 	switch(toupper(key))
 	{
 	//case 'B': break;
 	//case ' ':	break;
-	case ' ':
+	/*case ' ':
 	{
 		break;
 	}
-	/*case 'G':
+	case 'G':
 	{
 		static_cast<SpringsSystem*>(partSystem)->applyDirectionalForce();
 		break;
@@ -128,7 +127,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 		static_cast<SpringsSystem*>(partSystem)->changeK(-1);
 		break;
-	}*/
+	}
 	case 'U':
 		static_cast<RigidSolidSystem*>(partSystem)->explosion();
 		break;
@@ -136,7 +135,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		static_cast<PruebasSystem*>(partSystem)->explosion();
 		break;
 	default:
-		break;
+		break;*/
 	}
 }
 
@@ -144,6 +143,7 @@ void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 {
 	PX_UNUSED(actor1);
 	PX_UNUSED(actor2);
+	GM->onCollision(actor1, actor2);
 }
 
 

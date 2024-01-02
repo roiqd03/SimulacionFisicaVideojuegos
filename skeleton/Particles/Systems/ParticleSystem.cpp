@@ -78,6 +78,7 @@ ParticleSystem::~ParticleSystem() {
 	}
 
 	delete pFR;
+	delete box;
 }
 
 
@@ -100,4 +101,23 @@ void ParticleSystem::eraseParticles() {
 
 void ParticleSystem::pushErasedParticles(Entity* p) {
 	_erased.push(p);
+}
+
+void ParticleSystem::setEmpty() {
+	for (auto particle : _particles) {
+		delete particle;
+	}
+	_particles.clear();
+
+	for (auto gens : _force_generators) {
+		delete gens;
+	}
+	_force_generators.clear();
+
+	for (auto gens : _particles_generators) {
+		delete gens;
+	}
+	_particles_generators.clear();
+
+	pFR->clear();
 }

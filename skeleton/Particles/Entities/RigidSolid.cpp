@@ -23,6 +23,8 @@ RigidSolid::RigidSolid(Vector3 size, Vector4 color, float life_time, bool isStat
 		actor->attachShape(*shape);
 		renderItem = new RenderItem(shape, actor, color);
 	}
+
+	actor->userData = this;
 }
 
 RigidSolid::RigidSolid(float radius, Vector4 color, float life_time, bool isStatic, physx::PxPhysics* physics, physx::PxScene* scene) : 
@@ -49,6 +51,8 @@ RigidSolid::RigidSolid(float radius, Vector4 color, float life_time, bool isStat
 		actor->attachShape(*shape);
 		renderItem = new RenderItem(shape, actor, color);
 	}
+
+	actor->userData = this;
 }
 
 
@@ -86,3 +90,23 @@ void RigidSolid::setInvisible() {
 	else gScene->removeActor(*rb);
 	Entity::setInvisible();
 }
+
+void RigidSolid::setRotation(Vector4 rotation) {
+	auto tr = actor->getGlobalPose();
+	tr.q.x = rotation.x;
+	tr.q.y = rotation.y;
+	tr.q.z = rotation.z;
+	tr.q.w = rotation.w;
+	actor->setGlobalPose(tr);
+}
+
+void RigidSolid::changeUserData(void* data) {
+	actor->userData = data;
+}
+
+void RigidSolid::changeName(std::string name) {
+	this->name = name;
+}
+
+
+

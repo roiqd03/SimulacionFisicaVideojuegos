@@ -35,6 +35,11 @@
     <ClCompile Include="Particles\Entities\Entity.cpp" />
     <ClCompile Include="Particles\Entities\RigidSolid.cpp" />
     <ClCompile Include="Particles\Systems\RigidSolidSystem.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Particles\ForceGenerators\JumpForce.cpp" />
+    <ClCompile Include="Particles\Generators\ObstacleGenerator.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -72,6 +77,11 @@
     <ClInclude Include="Particles\Entities\Entity.h" />
     <ClInclude Include="Particles\Entities\RigidSolid.h" />
     <ClInclude Include="Particles\Systems\RigidSolidSystem.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Particles\ForceGenerators\JumpForce.h" />
+    <ClInclude Include="Particles\Generators\ObstacleGenerator.h" />
+    <ClInclude Include="Obstacle.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

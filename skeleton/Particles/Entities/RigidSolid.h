@@ -28,11 +28,16 @@ public:
 
 	virtual void addForce(const Vector3& f) { if (!isStatic) rb->addForce(f); }
 	virtual void setInvisible();
+	virtual void setRotation(Vector4 rotation);
+	void changeUserData(void* data);
+	void changeName(std::string name);
+	inline std::string getName() { return name; };
 protected:
 	bool sphereShape, isStatic;
 	physx::PxRigidBody* rb;
 	physx::PxRigidActor* actor;
 	physx::PxPhysics* gPhysics;
 	physx::PxScene* gScene;
+	std::string name;
 };
 

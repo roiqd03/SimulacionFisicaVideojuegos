@@ -253,6 +253,10 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
+    <ClCompile Include="Particles\Generators\ObstacleGenerator.cpp" />
+    <ClCompile Include="Particles\ForceGenerators\JumpForce.cpp" />
     <ClCompile Include="Particles\Entities\Entity.cpp" />
     <ClCompile Include="Particles\Entities\RigidSolid.cpp" />
     <ClCompile Include="Particles\ForceGenerators\BuoyancyForceGenerator.cpp" />
@@ -279,12 +283,17 @@
     <ClCompile Include="Particles\Systems\RigidSolidSystem.cpp" />
     <ClCompile Include="Particles\Utils\BoundingBox.cpp" />
     <ClCompile Include="Particles\Utils\Gun.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
     <ClCompile Include="Particles\Systems\SpringsSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Obstacle.h" />
+    <ClInclude Include="Particles\Generators\ObstacleGenerator.h" />
+    <ClInclude Include="Particles\ForceGenerators\JumpForce.h" />
     <ClInclude Include="Particles\Entities\Entity.h" />
     <ClInclude Include="Particles\ForceGenerators\BuoyancyForceGenerator.h" />
     <ClInclude Include="callbacks.hpp" />
@@ -311,6 +320,7 @@
     <ClInclude Include="Particles\Systems\RigidSolidSystem.h" />
     <ClInclude Include="Particles\Utils\BoundingBox.h" />
     <ClInclude Include="Particles\Utils\Gun.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />

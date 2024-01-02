@@ -19,6 +19,8 @@ public:
 	ParticleGenerator* getParticleGenerator(std::string name);
 	void pushErasedParticles(Entity* p);
 	void eraseParticles();
+	void setEmpty();
+	inline int num_particles() { return _particles.size(); }
 protected:
 	std::list<Entity*> _particles;
 	std::list<ParticleGenerator*> _particles_generators;

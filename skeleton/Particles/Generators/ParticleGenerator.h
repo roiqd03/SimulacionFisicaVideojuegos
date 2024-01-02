@@ -23,12 +23,13 @@ protected:
 	float time, loop_time;
 	int max_generation_particles; // if -1, there is no limit
 	int particles_generated = 0;
+	bool active = true;
 public:
 	ParticleGenerator(Vector3 mean_pos, Vector3 mean_vel, float erase_time, int num_particles, int max_generation_particles = -1);
 	virtual ~ParticleGenerator();
 	void setParticle(Entity* _model, std::string _type);
 	void addModelParticle(Entity* _model, std::string _type, bool isFirstGenerator = false);
-	void addGenerationLoop(float loop_time);
+	virtual void addGenerationLoop(float loop_time);
 	void addForceGenerator(ForceGenerator* fG);
 	std::list<ForceGenerator*>* const getForceGenerators(){ return &_force_generators; }
 	inline bool hasLoop() { return generateLoop; }
@@ -36,5 +37,7 @@ public:
 	virtual std::list<Entity*> generateParticles() = 0;
 	inline void changePosition(Vector3 pos) { mean_pos = pos; }
 	bool canGenerateParticles(double t);
+	inline bool isActive() { return active; }
+	inline void setActive(bool b) { active = b; }
 };
 

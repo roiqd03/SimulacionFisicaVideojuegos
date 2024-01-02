@@ -46,5 +46,5 @@ ParticleGenerator::~ParticleGenerator() {
 }
 
 bool ParticleGenerator::canGenerateParticles(double t) {
-	return hasLoop() && isLoopCompleted(t) && (max_generation_particles == -1 || particles_generated < max_generation_particles);
+	return active && hasLoop() && isLoopCompleted(t) && (max_generation_particles == -1 || particles_generated < max_generation_particles);
 }
