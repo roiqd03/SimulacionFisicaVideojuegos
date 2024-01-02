@@ -7,6 +7,7 @@ const float PLAYER_SPEED = 2;
 const float PLAYER_MASS = 0.5;
 const float MAX_TIME_GROUNDED = 0.3f;
 const float MAX_TIME_INPUT_STORED = 0.3f;
+const float JUMP_OFFSET = 0.1f;
 
 class Player : public RigidSolid
 {

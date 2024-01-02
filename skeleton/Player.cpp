@@ -18,8 +18,10 @@ void Player::integrate(double t) {
 	RigidSolid::integrate(t);
 	if (_tryJump) {
 		if (grounded) {
-			GameManager::jump(JUMP_FORCE);
-			_tryJump = false;
+			if (abs(rb->getLinearVelocity().y) <= JUMP_OFFSET) {
+				GameManager::jump(JUMP_FORCE);
+				_tryJump = false;
+			}
 		}
 		else {
 			timerJump += t;
@@ -35,10 +37,8 @@ void Player::integrate(double t) {
 	timer += t;
 }
 
-#include <iostream>
 bool Player::resetJump() {
 	if (timer > MAX_TIME_GROUNDED) {
-		std::cout << "GROUNDEADO XD\n";
 		rb->setLinearVelocity({ 0,0,0 });
 		rb->clearForce();
 		grounded = true;

@@ -21,7 +21,7 @@ private:
 	static bool end;
 	physx::PxPhysics* gPhysics;
 	physx::PxScene* gScene;
-	GameStates state = PLAYING;
+	GameStates state = START;
 	float time = 0;
 	float half_player_size;
 public:
