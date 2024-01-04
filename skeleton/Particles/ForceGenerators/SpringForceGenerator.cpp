@@ -7,15 +7,16 @@ SpringForceGenerator::SpringForceGenerator(double k, double resting_length, Enti
 }
 
 bool SpringForceGenerator::updateForce(Entity* particle, double t) {
-	Vector3 relative_pos_vector = _other->getPosition() - particle->getPosition();
-	Vector3 force;
+	if (active) {
+		Vector3 relative_pos_vector = _other->getPosition() - particle->getPosition();
+		Vector3 force;
 
-	const float length = relative_pos_vector.normalize();
-	const float delta_x = length - _resting_length;
+		const float length = relative_pos_vector.normalize();
+		const float delta_x = length - _resting_length;
 
-	force = relative_pos_vector * delta_x * _k;
+		force = relative_pos_vector * delta_x * _k;
 
-	particle->addForce(force);
-
+		particle->addForce(force);
+	}
 	return true;
 }

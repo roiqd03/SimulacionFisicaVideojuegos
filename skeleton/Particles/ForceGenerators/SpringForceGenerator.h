@@ -9,9 +9,12 @@ public:
 	inline void setK(double k) { _k = k; }
 	inline double getK() { return _k; }
 	virtual ~SpringForceGenerator(){};
+	inline void setActive(bool b) { active = b; }
+	inline bool isActive() { return active; }
 protected:
 	double _k;
 	double _resting_length;
 	Entity* _other;
+	bool active = true;
 };
 

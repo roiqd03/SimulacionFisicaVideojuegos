@@ -9,7 +9,7 @@ Obstacle::Obstacle(physx::PxPhysics* physics, physx::PxScene* scene, std::vector
 	for (int i = k; i >= 0; --i) {
 		for (int j = 0; j <= k2; ++j) {
 			if (info[i][j] == '1') {
-				rs = new RigidSolid({ OBSTACLE_SIZE, OBSTACLE_SIZE , OBSTACLE_SIZE }, { 0,1,0,1 }, -1, true, physics, scene);
+				rs = new RigidSolid({ OBSTACLE_SIZE, OBSTACLE_SIZE , OBSTACLE_SIZE }, { 0,1,0,1 }, -1, true, physics, scene, {1,1,-1});
 				obstacles.push_front(rs);
 				rs->setPosition({ j * OBSTACLE_SIZE, (k - i) * OBSTACLE_SIZE, 0 } );
 				rs->changeName("CUADRADO");
@@ -28,10 +28,20 @@ Obstacle::Obstacle(physx::PxPhysics* physics, physx::PxScene* scene, std::vector
 				rs->changeName("CIRCULO");
 			}
 			else if (info[i][j] == '4') {
-				rs = new RigidSolid({ OBSTACLE_SIZE, OBSTACLE_SIZE / 2.0f , OBSTACLE_SIZE }, { 0,1,0,1 }, -1, true, physics, scene);
+				rs = new RigidSolid({ OBSTACLE_SIZE, OBSTACLE_SIZE / 2.0f , OBSTACLE_SIZE }, { 0,1,0,1 }, -1, true, physics, scene, { 1,1,-1 });
 				obstacles.push_front(rs);
 				rs->setPosition({ j * OBSTACLE_SIZE, (k - i) * OBSTACLE_SIZE - OBSTACLE_SIZE / 4.0f, 0 });
 				rs->changeName("MEDIO_CUADRADO");
+			}
+			else if (info[i][j] == '5') { 
+				rs = new RigidSolid({ OBSTACLE_SIZE, OBSTACLE_SIZE * 2.5f, OBSTACLE_SIZE }, { 1,0,1,1 }, -1, false, physics, scene);
+				obstacles.push_front(rs);
+				rs->setPosition({ j * OBSTACLE_SIZE, (k - i) * OBSTACLE_SIZE + OBSTACLE_SIZE * 3.0f / 4.0f, 0 });
+				rs->changeName("PUENTE");
+				float mass = 2.0f;
+				rs->setInvMass(1.0f / mass);
+				const physx::PxVec3* vec = new physx::PxVec3(0, -OBSTACLE_SIZE, 0);
+				physx::PxRigidBodyExt::setMassAndUpdateInertia(*rs->getRigidBody(), physx::PxReal(mass), vec, false);
 			}
 		}
 	}

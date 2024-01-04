@@ -29,11 +29,14 @@ public:
 	void clearForce() { rb->clearForce(); }
 	void yellowTouched() { yellow_touched = true; };
 	bool getYellowTouched() { return yellow_touched; };
+	void purpleTouched() { purple_touched = true; };
+	bool getPurpleTouched() { return purple_touched; };
 private:
 	bool grounded = false;
 	bool _tryJump = false;
 	float timer = MAX_TIME_GROUNDED;
 	float timerJump = 0;
 	bool yellow_touched = false;
+	bool purple_touched = false;
 };
 

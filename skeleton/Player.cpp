@@ -5,13 +5,19 @@ Player::Player(physx::PxPhysics* physics, physx::PxScene* scene) : RigidSolid({P
 	resetJump();
 	actor->setName("PLAYER");
 	rb->setMass(PLAYER_MASS);
+	static_cast<physx::PxRigidDynamic*>(rb)->setRigidDynamicLockFlags(physx::PxRigidDynamicLockFlag::eLOCK_LINEAR_X | physx::PxRigidDynamicLockFlag::eLOCK_LINEAR_Z | physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_X | physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y | physx::PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z);
 
+	/*physx::PxVec3 v = rb->getMassSpaceInertiaTensor();
+	v.x = 0.0f;
+	v.y = 0.0f;
+	v.z = 0.0f;
+	rb->setMassSpaceInertiaTensor(v);*/
 	//Entity::setInvMass(1.0f/PLAYER_MASS);
 	//physx::PxRigidBodyExt::updateMassAndInertia(*rb, );
 }
 
 Player::~Player() {
-
+	GameManager::playerErased(getPosition());
 }
 
 void Player::integrate(double t) {
@@ -30,19 +36,13 @@ void Player::integrate(double t) {
 			}
 		}
 	}
-	auto tr = rb->getGlobalPose();
-	tr.p = { 0, tr.p.y, 0 };
-	tr.q = physx::PxQuat(0, 0, 0, 1);
-	rb->setGlobalPose(tr);
 	timer += t;
 }
-
 bool Player::resetJump() {
 	if (timer > MAX_TIME_GROUNDED) {
-		rb->setLinearVelocity({ 0,0,0 });
-		rb->clearForce();
 		grounded = true;
 		yellow_touched = false;
+		purple_touched = false;
 		timer = 0;
 		return true;
 	}

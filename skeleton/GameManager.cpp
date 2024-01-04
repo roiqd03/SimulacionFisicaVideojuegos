@@ -1,6 +1,7 @@
 #include "GameManager.h"
 #include "Particles/ForceGenerators/GravityForceGenerator.h"
 #include "Particles/ForceGenerators/JumpForce.h"
+#include "Particles/ForceGenerators/AnchoredSpringFG.h"
 #include "Particles/Generators/ObstacleGenerator.h"
 #include "Particles/Generators/GaussianParticleGenerator.h"
 #include "Obstacle.h"
@@ -11,13 +12,16 @@ ParticleSystem* GameManager::system = nullptr;
 Player* GameManager::player = nullptr;
 ParticleSystem* GameManager::playerParticles = nullptr;
 bool GameManager::end = false;
+bool GameManager::resetGame = false;
+Vector3 GameManager::deadPos = Vector3(0, 0, 0);
 
 GameManager::GameManager(physx::PxPhysics* physics, physx::PxScene* scene) : gPhysics(physics), gScene(scene) {
 	state = START;
 }
 
 void GameManager::onStart() {
-	BoundingBox* bb = new BoundingBox({ 80,200,50 });
+	resetGame = false;
+	BoundingBox* bb = new BoundingBox({ 80,HEIGHT_DEADLINE * 2,50 });
 
 	system = new ParticleSystem(bb);
 	player = new Player(gPhysics, gScene);
@@ -26,7 +30,7 @@ void GameManager::onStart() {
 	system->addParticle(player);
 	system->addRegistry(gFG, player); // Generador se añade si no está
 
-	RigidSolid* ground = new RigidSolid({ 70, 3, 50 }, { 0,0,0,1 }, -1, true, gPhysics, gScene);
+	RigidSolid* ground = new RigidSolid({ 70, 3, 50 }, { 0,0,0,1 }, -1, true, gPhysics, gScene, {1,1,-1});
 	system->addParticle(ground);
 
 	player->setPosition({ 0, 0, 0 });
@@ -95,10 +99,50 @@ void GameManager::onStart() {
 		}, 2.7f);
 	obsGen->addModelParticle(obs, "CONSECUTIVOS", true);
 	obs = new Obstacle(gPhysics, gScene, {
-	{'0','0','3','2','0'},
-	{'0','1','1','1','0'},
+	{'0','0','0','3','2'},
+	{'0','1','1','1','1'},
 	{'3','0','0','0','0'}
-		}, 2.5f);
+		}, 2.7f);
+	obsGen->addModelParticle(obs, "CONSECUTIVOS", true);
+	obs = new Obstacle(gPhysics, gScene, {
+	{'0','2','2','2','2','2','2','2'},
+	{'1','1','1','1','1','1','1','1'},
+	{'0','0','0','0','0','0','0','0'},
+	{'0','0','2','2','2','2','2','0'}
+		}, 3.5f);
+	obsGen->addModelParticle(obs, "CONSECUTIVOS", true);
+	obs = new Obstacle(gPhysics, gScene, {
+	{'0','0','5','0','0','0','0','0','0','2'},
+	{'1','1','1','1','1','1','1','1','1','1'}
+		}, 3.7f);
+	obsGen->addModelParticle(obs, "CONSECUTIVOS", true);
+	obs = new Obstacle(gPhysics, gScene, {
+	{'0','0','0','0','0','0','0','0','0','0'},
+	{'5','0','0','0','0','0','2','5','0','0'}
+		}, 3.7f);
+	obsGen->addModelParticle(obs, "CONSECUTIVOS", true);
+	obs = new Obstacle(gPhysics, gScene, {
+	{'0','0','0','0','0','5','0','0','0','0'},
+	{'0','0','0','1','1','1','2','2','1','1'},
+	{'1','1','1','1','1','1','1','1','1','1'}
+		}, 3.7f);
+	obsGen->addModelParticle(obs, "CONSECUTIVOS", true);
+	obs = new Obstacle(gPhysics, gScene, {
+	{'0','0','0','2','2','2','2','2','2','2','2'},
+	{'0','0','0','1','1','1','1','1','1','1','1'},
+	{'0','0','0','1','0','0','0','0','0','0','1'},
+	{'0','0','0','0','0','2','2','0','0','0','0'},
+	{'1','1','1','1','1','1','1','1','1','1','1'}
+		}, 3.7f);
+	obsGen->addModelParticle(obs, "CONSECUTIVOS", true);
+	obs = new Obstacle(gPhysics, gScene, {
+	{'1','1','1','1','0','0','0','0','0','0','0'},
+	{'0','0','0','0','0','0','0','0','0','0','0'},
+	{'0','0','0','0','0','0','2','0','0','2','3'},
+	{'0','0','0','1','1','1','1','1','1','1','1'},
+	{'0','0','0','0','0','0','0','0','0','0','0'},
+	{'0','2','2','2','2','2','2','2','2','2','2'}
+		}, 4.0f);
 	obsGen->addModelParticle(obs, "CONSECUTIVOS", true);
 	system->addGenerator(obsGen, "OBSTACULOS");
 	obsGen->addGenerationLoop(2);
@@ -110,10 +154,15 @@ GameManager::~GameManager() {
 }
 
 void GameManager::update(double t) {
-	if (state != START) {
+	if (resetGame) { // jugador fuera de la bounding box
+		player = nullptr;
+		onGameOver();
+		resetGame = false;
+	}
+	else if (state != START) {
 		system->integrate(t);
 		playerParticles->integrate(t);
-		if (state == PLAYING) {
+		if (state == PLAYING && !resetGame) {
 			gScene->simulate(t);
 			gScene->fetchResults(true);
 			if (end && system->num_particles() == 2) { // PLAYER Y SUELO
@@ -151,6 +200,7 @@ void GameManager::update(double t) {
 				state = PLAYING;
 				delete system;
 				delete playerParticles;
+				spring = nullptr;
 				onStart();
 			}
 		}
@@ -171,6 +221,24 @@ void GameManager::processInput(unsigned char key) {
 		else if (state == START) {
 			state = PLAYING;
 			onStart();
+		}
+	}
+	else if (key == 'Z') {
+		if (state == PLAYING) {
+			if (spring == nullptr) {
+				float pos = SPRING_POSITION - player->getPosition().y - SPRING_OFFSET;
+				AnchoredSpringFG* aSFG = new AnchoredSpringFG(5, pos, {0, SPRING_POSITION, 0});
+				system->addRegistry(aSFG, player);
+				aSFG->setActive(false);
+				spring = aSFG;
+			}
+
+			spring->setActive(!spring->isActive());
+			player->setVelocity({ 0, 0, 0 });
+			player->clearForce();
+			player->setGrounded(false);
+			playerParticles->getParticleGenerator("IZQ_PLAYER")->setActive(false);
+			playerParticles->getParticleGenerator("DER_PLAYER")->setActive(false);
 		}
 	}
 }
@@ -195,9 +263,13 @@ void GameManager::lastObstacleGenerated() {
 void GameManager::onGameOver() {
 	state = DEAD;
 	time = 0;
-	player->setLifeTime(0);
 	playerParticles->setEmpty();
-	GaussianParticleGenerator* gPG = new GaussianParticleGenerator(player->getPosition(), { 0,0,0 }, 3, 5, { 0.1,0.1,0.1 }, { 6,6,6 }, 1, 30);
+	GaussianParticleGenerator* gPG = nullptr;
+	if (player != nullptr) {
+		player->setLifeTime(0);
+		gPG = new GaussianParticleGenerator(player->getPosition(), { 0,0,0 }, 3, 5, { 0.1,0.1,0.1 }, { 6,6,6 }, 1, 30);
+	}
+	else gPG = new GaussianParticleGenerator(deadPos, { 0,0,0 }, 3, 5, { 0.1,0.1,0.1 }, { 6,6,6 }, 1, 30);
 	playerParticles->addGenerator(gPG, "DEAD");
 	Particle* p = new Particle(0.4, { 0,0.4,1,1 }, 0);
 	p->setInvMass(1.0f / 5.0f);
@@ -210,27 +282,47 @@ void GameManager::onGameOver() {
 
 void GameManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 {
-	if (actor1->getName() == "PLAYER") {
-		Player* p = static_cast<Player*>(actor1->userData);
-		RigidSolid* rs = static_cast<RigidSolid*>(actor2->userData);
+	if (actor1->getName() == "PLAYER" || actor2->getName() == "PLAYER") {
+		Player* p = nullptr;
+		RigidSolid* rs = nullptr;
+		if (actor1->getName() == "PLAYER") {
+			p = static_cast<Player*>(actor1->userData);
+			rs = static_cast<RigidSolid*>(actor2->userData);
+		}
+		else {
+			p = static_cast<Player*>(actor2->userData);
+			rs = static_cast<RigidSolid*>(actor1->userData);
+		}
+		
 		std::string name = rs->getName();
-		float a = p->getPosition().y - PLAYER_SIZE / 2.0f;
+		float down_player = p->getPosition().y - PLAYER_SIZE / 2.0f;
+		float up_player = p->getPosition().y + PLAYER_SIZE / 2.0f;
 
-		float b = rs->getPosition().y + OBSTACLE_SIZE / 2.0f + COLLISION_MARGIN;
+		float up_obstacle = rs->getPosition().y + OBSTACLE_SIZE / 2.0f - COLLISION_MARGIN;
+		float down_obstacle = rs->getPosition().y - OBSTACLE_SIZE / 2.0f + COLLISION_MARGIN;
+
+		float half_up_obstacle = rs->getPosition().y + OBSTACLE_SIZE / 4.0f - COLLISION_MARGIN;
+		float half_down_obstacle = rs->getPosition().y - OBSTACLE_SIZE / 4.0f + COLLISION_MARGIN;
 		if (name == "TRIANGULO" || 
-			(name == "CUADRADO" && p->getPosition().y - PLAYER_SIZE / 2.0f <= rs->getPosition().y + OBSTACLE_SIZE / 2.0f - COLLISION_MARGIN )
-			|| (name == "MEDIO_CUADRADO" && p->getPosition().y - PLAYER_SIZE / 2.0f <= rs->getPosition().y + OBSTACLE_SIZE / 4.0f - COLLISION_MARGIN)
-			) {
+			(name == "CUADRADO" && ((player->getPosition().y > rs->getPosition().y && down_player <= up_obstacle) ||
+				(player->getPosition().y <= rs->getPosition().y && up_player >= down_obstacle)))
+			|| (name == "MEDIO_CUADRADO" && ((player->getPosition().y > rs->getPosition().y && down_player <= half_up_obstacle) ||
+				(player->getPosition().y <= rs->getPosition().y && up_player >= half_down_obstacle)))) {
 			onGameOver();
 		}
 		else if (name == "CIRCULO" && !player->getYellowTouched()) {
-			player->setVelocity({ 0, 0, 0 });
-			player->clearForce();
 			player->yellowTouched();
 			GameManager::jump(YELLOW_JUMP_FORCE);
 		}
 		else {
-			if (p->resetJump() && name == "SUELO") {
+			if (name == "PUENTE") {
+				if (!player->getPurpleTouched()) {
+					player->purpleTouched();
+					if (player->getPosition().y < rs->getPosition().y)
+						onGameOver();
+				}
+			}
+			else if (p->resetJump() && name == "SUELO") {
 				ParticleGenerator* gPG = playerParticles->getParticleGenerator("IZQ_PLAYER");
 				gPG->setActive(true);
 				gPG->changePosition(player->getPosition() - Vector3(half_player_size, half_player_size, half_player_size));
@@ -242,3 +334,9 @@ void GameManager::onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 	}
 	
 }
+
+void GameManager::playerErased(Vector3 pos) {
+	resetGame = true;
+	deadPos = pos;
+}
+

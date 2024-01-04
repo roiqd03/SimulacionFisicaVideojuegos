@@ -1,6 +1,6 @@
 #include "RigidSolid.h"
 
-RigidSolid::RigidSolid(Vector3 size, Vector4 color, float life_time, bool isStatic, physx::PxPhysics* physics, physx::PxScene* scene) : 
+RigidSolid::RigidSolid(Vector3 size, Vector4 color, float life_time, bool isStatic, physx::PxPhysics* physics, physx::PxScene* scene, Vector3 materialInfo) :
 	Entity(size, color, life_time), gPhysics(physics), gScene(scene), isStatic(isStatic) {
 
 	sphereShape = false;
@@ -9,7 +9,13 @@ RigidSolid::RigidSolid(Vector3 size, Vector4 color, float life_time, bool isStat
 	physx::PxShape* shape;
 	volume = size.x * size.y * size.z;
 	physx::PxBoxGeometry cube(size / 2);
-	shape = CreateShape(cube);
+	if (materialInfo != Vector3(-1, -1, -1)) {
+		physx::PxMaterial* mMaterial;
+		mMaterial = gPhysics->createMaterial(materialInfo.x, materialInfo.y, materialInfo.z);
+		shape = CreateShape(cube, mMaterial);
+	}
+	else
+		shape = CreateShape(cube);
 	if (!isStatic) {
 		rb = physics->createRigidDynamic(tr);
 		actor = rb;

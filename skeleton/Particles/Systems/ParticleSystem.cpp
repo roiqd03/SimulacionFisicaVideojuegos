@@ -22,7 +22,7 @@ void ParticleSystem::addGenerator(ParticleGenerator* g, std::string name) {
 
 ParticleGenerator* ParticleSystem::getParticleGenerator(std::string name) {
 	auto it = id_generators.find(name);
-	if (it == id_generators.end()) throw std::invalid_argument("generator does not exist");
+	if (it == id_generators.end()) return nullptr;
 	else return (*it).second;
 }
 
