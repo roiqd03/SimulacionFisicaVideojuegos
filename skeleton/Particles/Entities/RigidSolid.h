@@ -7,7 +7,7 @@
 class RigidSolid : public Entity
 {
 public:
-	RigidSolid(float radius, Vector4 color, float life_time, bool isStatic, physx::PxPhysics* physics, physx::PxScene* scene);
+	RigidSolid(float radius, Vector4 color, float life_time, bool isStatic, physx::PxPhysics* physics, physx::PxScene* scene, Vector3 materialInfo = Vector3(-1, -1, -1));
 	RigidSolid(Vector3 size, Vector4 color, float life_time, bool isStatic, physx::PxPhysics* physics = nullptr, physx::PxScene* scene = nullptr, Vector3 materialInfo = Vector3(-1, -1, -1));
 	virtual ~RigidSolid();
 	virtual void integrate(double t);

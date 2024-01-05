@@ -22,7 +22,7 @@ Obstacle::Obstacle(physx::PxPhysics* physics, physx::PxScene* scene, std::vector
 				rs->changeName("TRIANGULO");
 			}
 			else if (info[i][j] == '3') {
-				rs = new RigidSolid(OBSTACLE_SIZE / 2, { 1,1,0,1 }, -1, true, physics, scene);
+				rs = new RigidSolid(OBSTACLE_SIZE / 2, { 1,1,0,1 }, -1, true, physics, scene, { 1,1,-1 });
 				obstacles.push_front(rs);
 				rs->setPosition({ j * OBSTACLE_SIZE, (k - i) * OBSTACLE_SIZE - OBSTACLE_SIZE * 0.7f, 0 });
 				rs->changeName("CIRCULO");

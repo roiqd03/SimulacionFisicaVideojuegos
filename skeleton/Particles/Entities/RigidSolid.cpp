@@ -33,7 +33,7 @@ RigidSolid::RigidSolid(Vector3 size, Vector4 color, float life_time, bool isStat
 	actor->userData = this;
 }
 
-RigidSolid::RigidSolid(float radius, Vector4 color, float life_time, bool isStatic, physx::PxPhysics* physics, physx::PxScene* scene) : 
+RigidSolid::RigidSolid(float radius, Vector4 color, float life_time, bool isStatic, physx::PxPhysics* physics, physx::PxScene* scene, Vector3 materialInfo) :
 	Entity(Vector3(radius, radius, radius), color, life_time), gPhysics(physics), gScene(scene), isStatic(isStatic) {
 
 	sphereShape = true;
@@ -41,7 +41,13 @@ RigidSolid::RigidSolid(float radius, Vector4 color, float life_time, bool isStat
 	physx::PxShape* shape;
 	volume = (4.0f / 3.0f) * atan(1) * 4 * pow(radius, 3);
 	physx::PxSphereGeometry sphere(radius);
-	shape = CreateShape(sphere);
+	if (materialInfo != Vector3(-1, -1, -1)) {
+		physx::PxMaterial* mMaterial;
+		mMaterial = gPhysics->createMaterial(materialInfo.x, materialInfo.y, materialInfo.z);
+		shape = CreateShape(sphere, mMaterial);
+	}
+	else
+		shape = CreateShape(sphere);
 	physx::PxTransform tr({ 0,0,0 });
 	if (!isStatic) {
 		rb = physics->createRigidDynamic(tr);

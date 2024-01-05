@@ -216,6 +216,7 @@ void GameManager::processInput(unsigned char key) {
 			state = PLAYING;
 			delete system;
 			delete playerParticles;
+			spring = nullptr;
 			onStart();
 		}
 		else if (state == START) {
