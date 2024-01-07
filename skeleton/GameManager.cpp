@@ -30,7 +30,7 @@ void GameManager::onStart() {
 	system->addParticle(player);
 	system->addRegistry(gFG, player); // Generador se añade si no está
 
-	RigidSolid* ground = new RigidSolid({ 70, 3, 50 }, { 0,0,0,1 }, -1, true, gPhysics, gScene, {1,1,-1});
+	RigidSolid* ground = new RigidSolid({ 100, 3, 50 }, { 0,0,0,1 }, -1, true, gPhysics, gScene, {1,1,-1});
 	system->addParticle(ground);
 
 	player->setPosition({ 0, 0, 0 });

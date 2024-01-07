@@ -13,7 +13,7 @@
 
 #include "GameManager.h"
 
-std::string display_text = "This is a test";
+std::string display_text = "Press Space to start";
 
 
 using namespace physx;
@@ -107,35 +107,13 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	GM->processInput(toupper(key));
 	switch(toupper(key))
 	{
-	//case 'B': break;
-	//case ' ':	break;
-	/*case ' ':
+	
+	case ' ':
 	{
+		display_text = "";
 		break;
 	}
-	case 'G':
-	{
-		static_cast<SpringsSystem*>(partSystem)->applyDirectionalForce();
-		break;
-	}
-	case 'Y':
-	{
-		static_cast<SpringsSystem*>(partSystem)->changeK(1);
-		break;
-	}
-	case 'H':
-	{
-		static_cast<SpringsSystem*>(partSystem)->changeK(-1);
-		break;
-	}
-	case 'U':
-		static_cast<RigidSolidSystem*>(partSystem)->explosion();
-		break;
-	case 'I':
-		static_cast<PruebasSystem*>(partSystem)->explosion();
-		break;
-	default:
-		break;*/
+	
 	}
 }
 
